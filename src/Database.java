@@ -10,7 +10,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.util.Random;
 import java.util.UUID;
 
 public class Database {
@@ -25,11 +24,10 @@ public class Database {
 
     public static NodeList getUsers() throws Exception {
         Document document = getDocument("src/users.xml");
-        return document.getElementsByTagName("user");
+        return document.getDocumentElement().getElementsByTagName("user");
     }
 
     private static String generateNewUserID() {
-        Random random = new Random();
         return UUID.randomUUID().toString().substring(0, 8);
     }
 

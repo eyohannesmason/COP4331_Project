@@ -12,11 +12,5 @@
     <password>passwordhashgoeshere</password>
     <type>band</type>
 </user>
-    
-<user id="9e7c5ccc">
-    <name>Jack Black</name>
-    <password>$2a$10$e3dVuRJ5DVX1dIa/vHOOfurC30ZE9wB4VgNNTfHXOCF8rYIkNwGWK</password>
-    <type>musician</type>
-</user>
 
 </users>

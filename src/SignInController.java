@@ -1,10 +1,12 @@
+import database.UserDB;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 
 public class SignInController {
+    UserDB userDB;
     public SignInController() {
-
+        userDB = new UserDB("src/database/users.xml");
     }
 
     public static void main(String[] args) throws  Exception{
@@ -20,12 +22,12 @@ public class SignInController {
 
     public void addUser(String name, String password, String type) throws Exception {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        Database.addUser(name, hashedPassword, type);
+        userDB.addUser(name, hashedPassword, type);
     }
 
     private Element getUser(String name) throws Exception {
-        NodeList users = Database.getUsers();
-        Element user = null;
+        NodeList users = userDB.getUsers();
+        Element user;
         String currentName;
         for (int i=0; i<users.getLength(); i++) {
             user = (Element) users.item(i);
@@ -34,7 +36,14 @@ public class SignInController {
                 return user;
             }
         }
-        return user;
+        return null;
+    }
+
+    public void logIn(String name, String password) throws Exception {
+        Element user = getUser(name);
+        if (user != null && checkPassword(name, password)) {
+            userDB.setUserLoggedIn(user.getAttribute("id"));
+        }
     }
 
     public boolean checkPassword(String name, String passAttempt) throws Exception {

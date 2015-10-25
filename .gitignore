@@ -2,9 +2,7 @@
 
 COP4331_Project.iml
 .idea
-
-### Java template
-*.class
+out
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

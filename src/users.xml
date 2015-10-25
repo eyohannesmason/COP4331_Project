@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user id="1">
+        <name>John Smith</name>
+        <instruments>
+            <primary>guitar</primary>
+            <secondary>bass</secondary>
+            <secondary>piano</secondary>
+        </instruments>
+        <password>passwordhashgoeshere</password>
+        <salt>passwordsaltgoeshere</salt>
+    </user>
+    <user id="2">
+        <name>Jane Doe</name>
+        <instruments>
+            <primary>bass</primary>
+            <secondary>piano</secondary>
+            <secondary>vocals</secondary>
+        </instruments>
+        <password>passwordhashgoeshere</password>
+        <salt>passwordsaltgoeshere</salt>
+    </user>
+</users>

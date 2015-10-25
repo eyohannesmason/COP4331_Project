@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <users>
-    <user id="1">
-        <name>John Smith</name>
-        <instruments>
-            <primary>guitar</primary>
-            <secondary>bass</secondary>
-            <secondary>piano</secondary>
-        </instruments>
-        <password>passwordhashgoeshere</password>
-        <salt>passwordsaltgoeshere</salt>
-    </user>
-    <user id="2">
-        <name>Jane Doe</name>
-        <instruments>
-            <primary>bass</primary>
-            <secondary>piano</secondary>
-            <secondary>vocals</secondary>
-        </instruments>
-        <password>passwordhashgoeshere</password>
-        <salt>passwordsaltgoeshere</salt>
-    </user>
+
+<user id="1">
+    <name>John Smith</name>
+    <password>passwordhashgoeshere</password>
+    <type>musician</type>
+</user>
+
+<user id="2">
+    <name>The Beatles</name>
+    <password>passwordhashgoeshere</password>
+    <type>band</type>
+</user>
+    
+<user id="9e7c5ccc">
+    <name>Jack Black</name>
+    <password>$2a$10$e3dVuRJ5DVX1dIa/vHOOfurC30ZE9wB4VgNNTfHXOCF8rYIkNwGWK</password>
+    <type>musician</type>
+</user>
+
 </users>

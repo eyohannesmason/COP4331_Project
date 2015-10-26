@@ -1,20 +1,16 @@
 package database;
+import junit.framework.TestCase;
 
-import org.junit.Test;
+public class DatabaseTest extends TestCase {
 
-public class DatabaseTest {
-
-    @Test
     public void testGetUsers() throws Exception {
 
     }
 
-    @Test
     public void testAddUser() throws Exception {
 
     }
 
-    @Test
     public void testSetUserLoggedIn() throws Exception {
 
     }

@@ -4,6 +4,9 @@ COP4331_Project.iml
 .idea
 out
 
+# Leaves the example files in the repo, no need to overwrite for now
+*.xml
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

@@ -2,6 +2,7 @@ package database;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,6 +41,11 @@ public class Database {
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(new File(XML_PATH));
         transformer.transform(source, result);
+    }
+
+    protected NodeList getItems(String tagName) throws Exception {
+        Document document = getDocument(XML_PATH);
+        return document.getElementsByTagName(tagName);
     }
 
     protected String generateNewID() {
@@ -81,6 +87,13 @@ public class Database {
         newElm.setIdAttribute(id, true);
         document.getDocumentElement().appendChild(newElm);
         saveDocument(document);
+        return newElm;
+    }
+
+    protected Element addElementToRoot(String tagName, String id) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element newElm = document.createElement(tagName);
+        newElm.setIdAttribute(id, true);
         return newElm;
     }
 }

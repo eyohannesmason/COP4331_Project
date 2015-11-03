@@ -16,7 +16,7 @@ public class SignInController { // todo possibly change name, not really a contr
 
     public void addUser(String name, String password, String type) throws Exception {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        String newID = userDB.addUser(name, hashedPassword, type);
+        Element newUser = userDB.addUser(name, hashedPassword, type);
         // todo create musician/band DB entry here
     }
 

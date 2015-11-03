@@ -15,17 +15,15 @@ public class UserDB extends Database {
     }
 
     public NodeList getUsers() throws Exception {
-        Document document = getDocument("src/database/users.xml");
-        return document.getDocumentElement().getElementsByTagName("user");
+        return getItems("user");
     }
 
-    public String addUser(String name, String password, String type) throws Exception {
+    public Element addUser(String name, String password, String type) throws Exception {
         LinkedHashMap<String, String> children = new LinkedHashMap<String, String>();
         children.put("name", name);
         children.put("password", password);
         children.put("type", type);
-        Element newUser = addElementToRoot("user", children);
-        return newUser.getAttribute("id");
+        return addElementToRoot("user", children);
     }
 
     public void setUserLoggedIn(String id) throws Exception {

@@ -3,26 +3,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 
-public class SignInController {
+public class SignInController { // todo possibly change name, not really a controller yet
     UserDB userDB;
     public SignInController() {
         userDB = new UserDB("src/database/users.xml");
     }
 
     public static void main(String[] args) throws  Exception{
-        String name="Jack Black", password = "mYpA5sw0Rd", type="musician";
-        SignInController controller = new SignInController();
-        controller.addUser(name, password, type);
-
-        if (!controller.checkPassword("Jack Black", "badpass")) {
-            System.out.println("Your password sucks");
-        }
-
+        UserDB db = new UserDB("src/database/users.xml");
+        db.addUser("Ronald McDonald", "password", "musician");
     }
 
     public void addUser(String name, String password, String type) throws Exception {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        userDB.addUser(name, hashedPassword, type);
+        String newID = userDB.addUser(name, hashedPassword, type);
+        // todo create musician/band DB entry here
     }
 
     private Element getUser(String name) throws Exception {

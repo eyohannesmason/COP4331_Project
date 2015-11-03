@@ -4,6 +4,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 
 public class UserDB extends Database {
 
@@ -16,26 +19,13 @@ public class UserDB extends Database {
         return document.getDocumentElement().getElementsByTagName("user");
     }
 
-    public  void addUser(String name, String password, String type) throws Exception {
-        // todo should generate blank musician/band and profile XML
-        Document document = getDocument(XML_PATH);
-        Element newUser = document.createElement("user");
-        newUser.setAttribute("id", generateNewID());
-
-        Element userName = document.createElement("name"),
-                userPass = document.createElement("password"),
-                userType = document.createElement("type");
-
-        userName.setTextContent(name);
-        userPass.setTextContent(password);
-        userType.setTextContent(type);
-        newUser.appendChild(userName);
-        newUser.appendChild(userPass);
-        newUser.appendChild(userType);
-        document.getDocumentElement().appendChild(newUser);
-
-        // save to file
-        saveDocument(document);
+    public String addUser(String name, String password, String type) throws Exception {
+        LinkedHashMap<String, String> children = new LinkedHashMap<String, String>();
+        children.put("name", name);
+        children.put("password", password);
+        children.put("type", type);
+        Element newUser = addElementToRoot("user", children);
+        return newUser.getAttribute("id");
     }
 
     public void setUserLoggedIn(String id) throws Exception {

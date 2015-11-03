@@ -1,6 +1,7 @@
 package database;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,6 +11,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Database {
@@ -52,5 +54,33 @@ public class Database {
         Document document = getDocument(XML_PATH);
         document.getElementById(elmID).setAttribute(attributeName, newValue);
         saveDocument(document);
+    }
+
+    protected Element addElementToRoot(String tagName, HashMap<String, String> childContents) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element newElm = document.createElement(tagName);
+        for(HashMap.Entry<String, String> entry: childContents.entrySet()) {
+            Element childElm = document.createElement(entry.getKey());
+            childElm.setTextContent(entry.getValue());
+            newElm.appendChild(childElm);
+        }
+        newElm.setIdAttribute(generateNewID(), false);
+        document.getDocumentElement().appendChild(newElm);
+        saveDocument(document);
+        return newElm;
+    }
+
+    protected Element addElementToRoot(String tagName, String id, HashMap<String, String> childContents) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element newElm = document.createElement(tagName);
+        for(HashMap.Entry<String, String> entry: childContents.entrySet()) {
+            Element childElm = document.createElement(entry.getKey());
+            childElm.setTextContent(entry.getValue());
+            newElm.appendChild(childElm);
+        }
+        newElm.setIdAttribute(id, true);
+        document.getDocumentElement().appendChild(newElm);
+        saveDocument(document);
+        return newElm;
     }
 }

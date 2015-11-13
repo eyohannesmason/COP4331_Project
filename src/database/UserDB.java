@@ -1,18 +1,18 @@
 package database;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 
 public class UserDB extends Database {
 
-    public UserDB(String xmlPath) {
-        XML_PATH = xmlPath;
+    private UserDB() {
+        XML_PATH = "src/database/users.xml";
     }
+    private static UserDB database = new UserDB();
+    public static UserDB getUserDB() {return database;}
 
     public NodeList getUsers() throws Exception {
         return getItems("user");

@@ -4,14 +4,15 @@ import org.w3c.dom.NodeList;
 
 
 public class SignInController { // todo possibly change name, not really a controller yet
-    UserDB userDB;
+    private static UserDB userDB;
+
     public SignInController() {
-        userDB = new UserDB("src/database/users.xml");
+        userDB = UserDB.getUserDB();
     }
 
     public static void main(String[] args) throws  Exception{
-        UserDB db = new UserDB("src/database/users.xml");
-        db.addUser("Ronald McDonald", "password", "musician");
+        SignInController sic = new SignInController();
+        userDB.addUser("Ronald McDonald", "password", "musician");
     }
 
     public void addUser(String name, String password, String type) throws Exception {

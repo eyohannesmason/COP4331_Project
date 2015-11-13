@@ -1,15 +1,15 @@
 package database;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.util.LinkedHashMap;
-
 public class MusicianDB extends Database {
-    public MusicianDB(String filePath) {
-        XML_PATH = filePath;
+    private MusicianDB() {
+        XML_PATH = "src/database/musicians.xml";
     }
+    private static MusicianDB database = new MusicianDB();
+    public static MusicianDB getMusicianDB() {return database;}
+
     public NodeList getMusicians() throws Exception {
         return getItems("musician");
     }

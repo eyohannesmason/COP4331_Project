@@ -70,7 +70,7 @@ public class Database {
             childElm.setTextContent(entry.getValue());
             newElm.appendChild(childElm);
         }
-        newElm.setIdAttribute(generateNewID(), false);
+        newElm.setAttribute("id", generateNewID());
         document.getDocumentElement().appendChild(newElm);
         saveDocument(document);
         return newElm;
@@ -84,7 +84,7 @@ public class Database {
             childElm.setTextContent(entry.getValue());
             newElm.appendChild(childElm);
         }
-        newElm.setIdAttribute(id, true);
+        newElm.setAttribute("id", id);
         document.getDocumentElement().appendChild(newElm);
         saveDocument(document);
         return newElm;
@@ -93,7 +93,9 @@ public class Database {
     protected Element addElementToRoot(String tagName, String id) throws Exception {
         Document document = getDocument(XML_PATH);
         Element newElm = document.createElement(tagName);
-        newElm.setIdAttribute(id, true);
+        newElm.setAttribute("id", id);
+        document.getDocumentElement().appendChild(newElm);
+        saveDocument(document);
         return newElm;
     }
 }

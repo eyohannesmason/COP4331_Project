@@ -20,7 +20,7 @@ public class Database {
     protected String XML_PATH;
 
     public Database() {
-        XML_PATH = "src/database/users.xml"; //
+        XML_PATH = "src/database/users.xml";
     }
 
     public Database(String xmlPath) {
@@ -49,7 +49,7 @@ public class Database {
     }
 
     protected String generateNewID() {
-        /*I figure we could make DB items' share IDs,
+        /*I figure we could make DB items share IDs,
           e.g. the Profile with ID=123 corresponds to
           the user with ID=123.
           */

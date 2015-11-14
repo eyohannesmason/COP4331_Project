@@ -1,24 +1,31 @@
+import database.MusicianDB;
 import database.UserDB;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 
 public class SignInController { // todo possibly change name, not really a controller yet
-    private static UserDB userDB;
-
-    public SignInController() {
-        userDB = UserDB.getUserDB();
-    }
 
     public static void main(String[] args) throws  Exception{
         SignInController sic = new SignInController();
-        userDB.addUser("Ronald McDonald", "password", "musician");
+        sic.addUser("Ronald McDonald", "password", "musician");
+    }
+
+    public SignInController() {
+        userDB = UserDB.getUserDB();
+        musicianDB = MusicianDB.getMusicianDB();
     }
 
     public void addUser(String name, String password, String type) throws Exception {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         Element newUser = userDB.addUser(name, hashedPassword, type);
-        // todo create musician/band DB entry here
+        if (type.equals("musician")) {
+            musicianDB.addMusician(newUser);
+        } else if (type.equals("band")) {
+            System.out.println("No band db exists"); // todo bandDB.addBand(newUser)
+        } else {
+            throw new IllegalArgumentException("user type invalid");
+        }
     }
 
     private Element getUser(String name) throws Exception {
@@ -50,4 +57,6 @@ public class SignInController { // todo possibly change name, not really a contr
         }
         return false;
     }
+    private static UserDB userDB;
+    private static MusicianDB musicianDB;
 }

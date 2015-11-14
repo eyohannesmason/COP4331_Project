@@ -3,6 +3,8 @@ package database;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.LinkedHashMap;
+
 public class MusicianDB extends Database {
     private MusicianDB() {
         XML_PATH = "src/database/musicians.xml";
@@ -17,7 +19,10 @@ public class MusicianDB extends Database {
     public void addMusician(Element userElement) throws Exception {
         String name = userElement.getElementsByTagName("name").item(0).getTextContent(),
                  id = userElement.getAttribute("id");
-        Element newMusician = addElementToRoot(name, id);
+        LinkedHashMap<String, String> children = new LinkedHashMap<String, String>();
+        children.put("name", name);
+        children.put("instruments", "");
+        addElementToRoot("musician", id, children);
     }
 
     public void addInstruments(String id, String primaryInstrument) throws Exception {

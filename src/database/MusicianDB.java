@@ -16,6 +16,10 @@ public class MusicianDB extends Database {
         return getItems("musician");
     }
 
+    public Element getMusician(String musicianID) throws Exception {
+        return getDocument(XML_PATH).getElementById(musicianID);
+    }
+
     public void addMusician(Element userElement) throws Exception {
         String name = userElement.getElementsByTagName("name").item(0).getTextContent(),
                  id = userElement.getAttribute("id");

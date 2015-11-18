@@ -71,6 +71,7 @@ public class Database {
             newElm.appendChild(childElm);
         }
         newElm.setAttribute("id", generateNewID());
+        newElm.setAttribute("logged-in", "false");
         document.getDocumentElement().appendChild(newElm);
         saveDocument(document);
         return newElm;

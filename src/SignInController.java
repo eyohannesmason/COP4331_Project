@@ -1,3 +1,4 @@
+import database.BandDB;
 import database.MusicianDB;
 import database.UserDB;
 import org.w3c.dom.Element;
@@ -9,11 +10,13 @@ public class SignInController { // todo possibly change name, not really a contr
     public static void main(String[] args) throws  Exception{
         SignInController sic = new SignInController();
         sic.addUser("Ronald McDonald", "password", "musician");
+        sic.addUser("The White Stripes", "megwhite1", "band");
     }
 
     public SignInController() {
         userDB = UserDB.getUserDB();
         musicianDB = MusicianDB.getMusicianDB();
+        bandDB = BandDB.getBandDB();
     }
 
     public void addUser(String name, String password, String type) throws Exception {
@@ -22,7 +25,7 @@ public class SignInController { // todo possibly change name, not really a contr
         if (type.equals("musician")) {
             musicianDB.addMusician(newUser);
         } else if (type.equals("band")) {
-            System.out.println("No band db exists"); // todo bandDB.addBand(newUser)
+            bandDB.addBand(newUser);
         } else {
             throw new IllegalArgumentException("user type invalid");
         }
@@ -59,4 +62,5 @@ public class SignInController { // todo possibly change name, not really a contr
     }
     private static UserDB userDB;
     private static MusicianDB musicianDB;
+    private static BandDB bandDB;
 }

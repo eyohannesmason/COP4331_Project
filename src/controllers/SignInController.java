@@ -4,14 +4,12 @@ import app.BandHeroApp;
 import database.BandDB;
 import database.MusicianDB;
 import database.UserDB;
-import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import utils.BCrypt;
 import views.SignInView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -70,7 +68,8 @@ public class SignInController { // todo possibly change name, not really a contr
         return false;
     }
 
-    public void createSignInActionListener(SignInView view) {
+    public void createSignInActionListener(SignInView origview) {
+        final SignInView view = origview;
         System.out.println(view);
         if(view == null) {
             System.out.println("Could not get Sign In View!!!");

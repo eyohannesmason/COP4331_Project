@@ -89,7 +89,7 @@ public class SignInController { // todo possibly change name, not really a contr
                     else {
                         try {
                             if (logIn(view.getEmail(), view.getPassword())) {
-                                JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.OK_OPTION);
+                                JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else {
                                 JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Failed! Try again, or click Register to create a new account.", "Sign In Error", JOptionPane.WARNING_MESSAGE);

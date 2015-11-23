@@ -1,6 +1,7 @@
 package app;
 
 import database.UserDB;
+import views.RegistrationView;
 import views.SignInView;
 import controllers.*;
 import javax.swing.*;
@@ -21,17 +22,26 @@ public class BandHeroApp {
 
     private void createAndShowGUI() {
         mainFrame = new JFrame("Band Hero");
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(500, 400));
+        loadRegistrationView();
 
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+    }
+
+    private void loadRegistrationView() {
+        RegistrationView registrationView = new RegistrationView();
+        mainFrame.add(registrationView);
+    }
+
+    private void loadSignInView() {
         //Create SignInView and add it to the app Frame
         SignInView signInView = new SignInView();
         mainFrame.add(signInView);
         //Add Sign In Action Listener from Controller.
         SignInController.getInstance().createSignInActionListener(signInView);
         try { UserDB.getUserDB().addUser("Costin", "12345", "Musician"); } catch (Exception e) {}
-        mainFrame.pack();
-        mainFrame.setVisible(true);
     }
 
     public JFrame getMainFrame() {

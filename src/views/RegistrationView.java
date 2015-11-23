@@ -1,7 +1,11 @@
 package views;
 
+import app.BandHeroApp;
+import controllers.SignInController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RegistrationView extends JPanel {
@@ -91,7 +95,41 @@ public class RegistrationView extends JPanel {
         container.add(buttons, BorderLayout.PAGE_END);
         container.setMinimumSize(container.getPreferredSize());
         this.add(container);
+        addActionListeners();
     }
+
+    private void addActionListeners() {
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String     email = emailTextField.getText(),
+                        password = passwordTextField.getText().trim(),
+                          repeat = repeatField.getText().trim();
+                if (email.isEmpty() || password.isEmpty() || repeat.isEmpty()) {
+                    showPopUpAlert("All fields are required.");
+                }
+                else if (!password.equals(repeat)) {
+                    showPopUpAlert("Passwords don't match.");
+                } else {
+
+                    String type = (musicianButton.isSelected()) ? "musician" : "band";
+                    try {
+                        SignInController.getInstance().addUser(email, password, type);
+                        showPopUpAlert("New user added.");
+                        // todo trigger view change
+                    } catch (Exception ex) {
+                        // todo should be 'user already exists' error
+                        showPopUpAlert("Error adding new user.");
+                    }
+                }
+            }
+        });
+    }
+
+    private void showPopUpAlert(String message) {
+        JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), message);
+    }
+
     private JPanel buttons, container, registerPanel;
     private JButton registerButton;
     private JLabel registerLabel, emailLabel, passwordLabel, repeatLabel;

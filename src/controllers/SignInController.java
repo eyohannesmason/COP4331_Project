@@ -34,6 +34,7 @@ public class SignInController { // todo possibly change name, not really a contr
     }
 
     public void addUser(String name, String password, String type) throws Exception {
+        // todo throw exception if user already exists
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         Element newUser = userDB.addUser(name, hashedPassword, type);
         if (type.equals("musician")) {

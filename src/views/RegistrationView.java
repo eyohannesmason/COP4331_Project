@@ -1,6 +1,7 @@
 package views;
 
 import app.BandHeroApp;
+import controllers.SignInController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,7 +84,26 @@ public class RegistrationView extends BaseView {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String     email = emailTextField.getText(),
+                        password = passwordTextField.getText().trim(),
+                          repeat = repeatField.getText().trim();
+                if (email.isEmpty() || password.isEmpty() || repeat.isEmpty()) {
+                    showPopUpAlert("All fields are required.");
+                }
+                else if (!password.equals(repeat)) {
+                    showPopUpAlert("Passwords don't match.");
+                } else {
 
+                    String type = (musicianButton.isSelected()) ? "musician" : "band";
+                    try {
+                        SignInController.getInstance().addUser(email, password, type);
+                        showPopUpAlert("New user added.");
+                        // todo trigger view change
+                    } catch (Exception ex) {
+                        // todo should be 'user already exists' error
+                        showPopUpAlert("Error adding new user.");
+                    }
+                }
             }
         });
     }

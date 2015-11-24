@@ -1,35 +1,16 @@
 package views;
 
 import app.BandHeroApp;
-import controllers.SignInController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RegistrationView extends JPanel {
-
+public class RegistrationView extends BaseView {
     public RegistrationView() {
-        this.setLayout(new FlowLayout());
+       super(new FlowLayout());
         createComponents();
-        this.setPreferredSize(this.getPreferredSize());
-        this.setMaximumSize(this.getPreferredSize());
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
-    }
-
-    public Dimension getPreferredSize() {
-        int w = 0;
-        int h = 0;
-        for(int i = 0; i < this.getComponents().length; i++) {
-            w += this.getComponent(i).getPreferredSize().getWidth();
-            h += this.getComponent(i).getPreferredSize().getHeight();
-        }
-        return new Dimension(w, h);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
     }
 
     public void addRegisterActionListener(ActionListener l) {
@@ -44,7 +25,7 @@ public class RegistrationView extends JPanel {
         return passwordTextField.getText().trim();
     }
 
-    private void createComponents() {
+    protected void createComponents() {
         //Create Sign In panel
         registerPanel = new JPanel();
         BoxLayout boxLayout = new BoxLayout(registerPanel, BoxLayout.PAGE_AXIS);
@@ -98,30 +79,11 @@ public class RegistrationView extends JPanel {
         addActionListeners();
     }
 
-    private void addActionListeners() {
+    protected void addActionListeners() {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String     email = emailTextField.getText(),
-                        password = passwordTextField.getText().trim(),
-                          repeat = repeatField.getText().trim();
-                if (email.isEmpty() || password.isEmpty() || repeat.isEmpty()) {
-                    showPopUpAlert("All fields are required.");
-                }
-                else if (!password.equals(repeat)) {
-                    showPopUpAlert("Passwords don't match.");
-                } else {
 
-                    String type = (musicianButton.isSelected()) ? "musician" : "band";
-                    try {
-                        SignInController.getInstance().addUser(email, password, type);
-                        showPopUpAlert("New user added.");
-                        // todo trigger view change
-                    } catch (Exception ex) {
-                        // todo should be 'user already exists' error
-                        showPopUpAlert("Error adding new user.");
-                    }
-                }
             }
         });
     }

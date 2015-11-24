@@ -7,31 +7,14 @@ import java.awt.event.ActionListener;
 /**
  * Created by costin on 11/19/2015.
  */
-public class SignInView extends JPanel {
+public class SignInView extends BaseView {
 
     public SignInView() {
         //TODO : remove border
-        this.setLayout(new FlowLayout());
+        super(new FlowLayout());
         createComponents();
-        this.setPreferredSize(this.getPreferredSize());
-        this.setMaximumSize(this.getPreferredSize());
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
-
     }
 
-    public Dimension getPreferredSize() {
-        int w = 0;
-        int h = 0;
-        for(int i = 0; i < this.getComponents().length; i++) {
-            w += this.getComponent(i).getPreferredSize().getWidth();
-            h += this.getComponent(i).getPreferredSize().getHeight();
-        }
-        return new Dimension(w, h);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-    }
 
     public void addSignInActionListener(ActionListener l) {
         signInButton.addActionListener(l);
@@ -49,7 +32,7 @@ public class SignInView extends JPanel {
         return passwordTextField.getText().trim();
     }
 
-    private void createComponents() {
+    protected void createComponents() {
         //Create Sign In panel
         signInPanel = new JPanel();
         BoxLayout boxLayout = new BoxLayout(signInPanel, BoxLayout.PAGE_AXIS);

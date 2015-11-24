@@ -1,9 +1,9 @@
 package app;
 
-import database.UserDB;
+import controllers.SignInController;
 import views.RegistrationView;
 import views.SignInView;
-import controllers.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +34,12 @@ public class BandHeroApp {
 
     private void loadRegistrationView() {
         RegistrationView registrationView = new RegistrationView();
+        registrationView.addBackActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadSignInView();
+            }
+        });
         mainFrame.setContentPane(registrationView);
         mainFrame.revalidate();
     }
@@ -45,16 +51,13 @@ public class BandHeroApp {
         signInView.addRegisterActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BandHeroApp.getInstance().loadRegistrationView();
+                loadRegistrationView();
             }
         });
 
-
-        mainFrame.add(signInView);
-        //Add Sign In Action Listener from Controller.
         SignInController.getInstance().createSignInActionListener(signInView);
-
-        try { UserDB.getUserDB().addUser("Costin", "12345", "Musician"); } catch (Exception e) {}
+        mainFrame.setContentPane(signInView);
+        mainFrame.revalidate();
     }
 
     public JFrame getMainFrame() {

@@ -18,6 +18,10 @@ public class RegistrationView extends BaseView {
         registerButton.addActionListener(l);
     }
 
+    public void addBackActionListener(ActionListener l) {
+        backButton.addActionListener(l);
+    }
+
     public String getEmail() {
         return emailTextField.getText().trim();
     }
@@ -54,6 +58,7 @@ public class RegistrationView extends BaseView {
         repeatField = new JPasswordField();
         repeatField.setMaximumSize(new Dimension(300, 25));
         registerButton = new JButton("Register");
+        backButton = new JButton("Back");
 
         musicianButton = new JRadioButton("musician", true);
         bandButton = new JRadioButton("band");
@@ -73,6 +78,7 @@ public class RegistrationView extends BaseView {
         registerPanel.add(bandButton);
 
         container.add(registerPanel, BorderLayout.CENTER);
+        buttons.add(backButton);
         buttons.add(registerButton);
         container.add(buttons, BorderLayout.PAGE_END);
         container.setMinimumSize(container.getPreferredSize());
@@ -113,7 +119,7 @@ public class RegistrationView extends BaseView {
     }
 
     private JPanel buttons, container, registerPanel;
-    private JButton registerButton;
+    private JButton registerButton, backButton;
     private JLabel registerLabel, emailLabel, passwordLabel, repeatLabel;
     private JTextField emailTextField;
     private JPasswordField passwordTextField, repeatField;

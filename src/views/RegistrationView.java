@@ -8,32 +8,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RegistrationView extends JPanel {
-
+public class RegistrationView extends BaseView {
     public RegistrationView() {
-        this.setLayout(new FlowLayout());
+       super(new FlowLayout());
         createComponents();
-        this.setPreferredSize(this.getPreferredSize());
-        this.setMaximumSize(this.getPreferredSize());
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
-    }
-
-    public Dimension getPreferredSize() {
-        int w = 0;
-        int h = 0;
-        for(int i = 0; i < this.getComponents().length; i++) {
-            w += this.getComponent(i).getPreferredSize().getWidth();
-            h += this.getComponent(i).getPreferredSize().getHeight();
-        }
-        return new Dimension(w, h);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
     }
 
     public void addRegisterActionListener(ActionListener l) {
         registerButton.addActionListener(l);
+    }
+
+    public void addBackActionListener(ActionListener l) {
+        backButton.addActionListener(l);
     }
 
     public String getEmail() {
@@ -44,7 +30,7 @@ public class RegistrationView extends JPanel {
         return passwordTextField.getText().trim();
     }
 
-    private void createComponents() {
+    protected void createComponents() {
         //Create Sign In panel
         registerPanel = new JPanel();
         BoxLayout boxLayout = new BoxLayout(registerPanel, BoxLayout.PAGE_AXIS);
@@ -72,6 +58,7 @@ public class RegistrationView extends JPanel {
         repeatField = new JPasswordField();
         repeatField.setMaximumSize(new Dimension(300, 25));
         registerButton = new JButton("Register");
+        backButton = new JButton("Back");
 
         musicianButton = new JRadioButton("musician", true);
         bandButton = new JRadioButton("band");
@@ -91,6 +78,7 @@ public class RegistrationView extends JPanel {
         registerPanel.add(bandButton);
 
         container.add(registerPanel, BorderLayout.CENTER);
+        buttons.add(backButton);
         buttons.add(registerButton);
         container.add(buttons, BorderLayout.PAGE_END);
         container.setMinimumSize(container.getPreferredSize());
@@ -98,7 +86,7 @@ public class RegistrationView extends JPanel {
         addActionListeners();
     }
 
-    private void addActionListeners() {
+    protected void addActionListeners() {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,7 +119,7 @@ public class RegistrationView extends JPanel {
     }
 
     private JPanel buttons, container, registerPanel;
-    private JButton registerButton;
+    private JButton registerButton, backButton;
     private JLabel registerLabel, emailLabel, passwordLabel, repeatLabel;
     private JTextField emailTextField;
     private JPasswordField passwordTextField, repeatField;

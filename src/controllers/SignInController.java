@@ -52,7 +52,7 @@ public class SignInController { // todo possibly change name, not really a contr
         String currentName;
         for (int i=0; i<users.getLength(); i++) {
             user = (Element) users.item(i);
-            currentName = user.getElementsByTagName("name").item(0).getTextContent();
+            currentName = user.getFirstChild().getTextContent();
             if (currentName.equals(name)) {
                 return user;
             }
@@ -89,7 +89,8 @@ public class SignInController { // todo possibly change name, not really a contr
                     }
                     else {
                         try {
-                            if (logIn(view.getEmail(), view.getPassword())) {
+                            String email = view.getEmail(), password = view.getPassword();
+                            if (logIn(email, password)) {
                                 JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else {

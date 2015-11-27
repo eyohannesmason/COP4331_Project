@@ -45,7 +45,8 @@ public class Database {
 
     protected NodeList getItems(String tagName) throws Exception {
         Document document = getDocument(XML_PATH);
-        return document.getElementsByTagName(tagName);
+        NodeList result = document.getElementsByTagName(tagName);
+        return result;
     }
 
     protected String generateNewID() {

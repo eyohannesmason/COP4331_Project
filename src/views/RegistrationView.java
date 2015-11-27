@@ -1,6 +1,7 @@
 package views;
 
 import app.BandHeroApp;
+import controllers.RegistrationController;
 import controllers.SignInController;
 
 import javax.swing.*;
@@ -28,6 +29,12 @@ public class RegistrationView extends BaseView {
 
     public String getPassword() {
         return passwordTextField.getText().trim();
+    }
+
+    public String getRepeatPassword() { return repeatField.getText(); }
+
+    public boolean isMusician() {
+        return musicianButton.isSelected() ? true : false;
     }
 
     protected void createComponents() {
@@ -83,38 +90,9 @@ public class RegistrationView extends BaseView {
         container.add(buttons, BorderLayout.PAGE_END);
         container.setMinimumSize(container.getPreferredSize());
         this.add(container);
-        addActionListeners();
     }
 
-    protected void addActionListeners() {
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String     email = emailTextField.getText(),
-                        password = passwordTextField.getText().trim(),
-                          repeat = repeatField.getText().trim();
-                if (email.isEmpty() || password.isEmpty() || repeat.isEmpty()) {
-                    showPopUpAlert("All fields are required.");
-                }
-                else if (!password.equals(repeat)) {
-                    showPopUpAlert("Passwords don't match.");
-                } else {
-
-                    String type = (musicianButton.isSelected()) ? "musician" : "band";
-                    try {
-                        SignInController.getInstance().addUser(email, password, type);
-                        showPopUpAlert("New user added.");
-                        // todo trigger view change
-                    } catch (Exception ex) {
-                        // todo should be 'user already exists' error
-                        showPopUpAlert("Error adding new user.");
-                    }
-                }
-            }
-        });
-    }
-
-    private void showPopUpAlert(String message) {
+    public void showPopUpAlert(String message) {
         JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), message);
     }
 

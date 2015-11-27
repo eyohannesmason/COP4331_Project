@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 public class SignInView extends BaseView {
 
     public SignInView() {
-        //TODO : remove border
         super(new FlowLayout());
         createComponents();
     }

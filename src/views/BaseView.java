@@ -9,7 +9,6 @@ public abstract class BaseView extends JPanel {
         this.setLayout(layout);
         this.setPreferredSize(getPreferredSize());
         this.setMaximumSize(getPreferredSize());
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
     public Dimension getPreferredSize() {

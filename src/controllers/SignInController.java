@@ -1,6 +1,7 @@
 package controllers;
 
 import app.BandHeroApp;
+import models.User;
 import org.w3c.dom.Element;
 import utils.BCrypt;
 import views.SignInView;
@@ -57,7 +58,8 @@ public class SignInController extends AuthenticationController {
                         try {
                             String email = view.getEmail(), password = view.getPassword();
                             if (logIn(email, password)) {
-                                JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                                BandHeroApp.getInstance().loadProfileView(new User(getUser(view.getEmail())));
+                                //JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else {
                                 JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Failed! Try again, or click Register to create a new account.", "Sign In Error", JOptionPane.WARNING_MESSAGE);

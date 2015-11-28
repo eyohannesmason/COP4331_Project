@@ -1,8 +1,12 @@
 package app;
 
 import controllers.IController;
+import controllers.ProfileController;
 import controllers.RegistrationController;
 import controllers.SignInController;
+import models.User;
+import sun.java2d.cmm.Profile;
+import views.ProfileView;
 import views.RegistrationView;
 import views.SignInView;
 
@@ -24,10 +28,17 @@ public class BandHeroApp {
     private void createAndShowGUI() {
         mainFrame = new JFrame("Band Hero");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setPreferredSize(new Dimension(500, 400));
+        mainFrame.setPreferredSize(new Dimension(1024, 768));
         loadSignInView();
         mainFrame.pack();
         mainFrame.setVisible(true);
+    }
+
+    public void loadProfileView(User user) {
+        controller = new ProfileController(user);
+        ((ProfileController) controller).setView(new ProfileView());
+        mainFrame.setContentPane(((ProfileController) controller).getView());
+        mainFrame.revalidate();
     }
 
     public void loadRegistrationView() {
@@ -46,6 +57,8 @@ public class BandHeroApp {
         mainFrame.setContentPane(((SignInController) controller).getView());
         mainFrame.revalidate();
     }
+
+    public IController getController() { return controller; }
 
     public JFrame getMainFrame() {
         return mainFrame;

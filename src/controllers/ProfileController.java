@@ -5,8 +5,15 @@ import views.ProfileView;
 
 public class ProfileController implements IController{
 
-    public ProfileController(User user, ProfileView view) {
+    public ProfileController(User user) {
         this.user = user;
+    }
+
+    /**
+     * Set the ProfileView of the controller.
+     * @param view ProfileView to be used.
+     */
+    public void setView(ProfileView view) {
         this.view = view;
     }
 

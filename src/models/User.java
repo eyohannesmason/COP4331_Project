@@ -21,10 +21,10 @@ public class User {
 
     /**
      * Get the User profile Image.
-     * @return A JLabel containing the rendered image.
+     * @return An ImageIcon containing the rendered image.
      */
-    public JLabel getProfileImage() {
-        return new JLabel(new ImageIcon(userProfileImage));
+    public ImageIcon getProfileImage() {
+        return new ImageIcon(userProfileImage);
     }
 
     /**

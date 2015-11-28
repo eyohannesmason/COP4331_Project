@@ -28,14 +28,15 @@ public class BandHeroApp {
     private void createAndShowGUI() {
         mainFrame = new JFrame("Band Hero");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setPreferredSize(new Dimension(500, 400));
+        mainFrame.setPreferredSize(new Dimension(1024, 768));
         loadSignInView();
         mainFrame.pack();
         mainFrame.setVisible(true);
     }
 
     public void loadProfileView(User user) {
-        controller = new ProfileController(user, new ProfileView());
+        controller = new ProfileController(user);
+        ((ProfileController) controller).setView(new ProfileView());
         mainFrame.setContentPane(((ProfileController) controller).getView());
         mainFrame.revalidate();
     }

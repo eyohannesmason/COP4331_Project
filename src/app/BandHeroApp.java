@@ -1,8 +1,12 @@
 package app;
 
 import controllers.IController;
+import controllers.ProfileController;
 import controllers.RegistrationController;
 import controllers.SignInController;
+import models.User;
+import sun.java2d.cmm.Profile;
+import views.ProfileView;
 import views.RegistrationView;
 import views.SignInView;
 
@@ -30,6 +34,12 @@ public class BandHeroApp {
         mainFrame.setVisible(true);
     }
 
+    public void loadProfileView(User user) {
+        controller = new ProfileController(user, new ProfileView());
+        mainFrame.setContentPane(((ProfileController) controller).getView());
+        mainFrame.revalidate();
+    }
+
     public void loadRegistrationView() {
         controller = RegistrationController.getInstance();
         ((RegistrationController) controller).setView(new RegistrationView());
@@ -46,6 +56,8 @@ public class BandHeroApp {
         mainFrame.setContentPane(((SignInController) controller).getView());
         mainFrame.revalidate();
     }
+
+    public IController getController() { return controller; }
 
     public JFrame getMainFrame() {
         return mainFrame;

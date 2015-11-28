@@ -23,6 +23,7 @@ public class UserDB extends Database {
         children.put("name", name);
         children.put("password", password);
         children.put("type", type);
+        children.put("profileImage", "src/images/defaultUserImg.png");
         return addElementToRoot("user", children);
     }
 

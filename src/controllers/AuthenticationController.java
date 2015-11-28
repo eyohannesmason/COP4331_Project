@@ -19,7 +19,7 @@ public abstract class AuthenticationController implements IController {
         String currentName;
         for (int i=0; i<users.getLength(); i++) {
             user = (Element) users.item(i);
-            currentName = user.getElementsByTagName("name").item(0).getTextContent();
+            currentName = user.getFirstChild().getTextContent();
             if (currentName.equals(name)) {
                 return user;
             }

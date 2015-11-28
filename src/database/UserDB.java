@@ -15,7 +15,7 @@ public class UserDB extends Database {
     public static UserDB getUserDB() {return database;}
 
     public NodeList getUsers() throws Exception {
-        return getItems("user");
+        return getItems();
     }
 
     public Element addUser(String name, String password, String type) throws Exception {

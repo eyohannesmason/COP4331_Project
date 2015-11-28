@@ -9,7 +9,7 @@ public class BandDB extends Database {
 
     public static BandDB getBandDB() {return database;}
     public NodeList getBands() throws Exception {
-        return getItems("band");
+        return getItems();
     }
 
     public void addBand(Element userElement) throws Exception {

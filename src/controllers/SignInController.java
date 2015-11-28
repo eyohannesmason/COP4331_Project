@@ -17,15 +17,29 @@ public class SignInController extends AuthenticationController {
         super();
     }
 
+
     public static SignInController getInstance() { return instance; }
 
-    public boolean logIn(String name, String password) throws Exception {
-        Element user = getUser(name);
-        if (user != null && checkPassword(name, password)) {
-            userDB.setUserLoggedIn(user.getAttribute("id"));
-            return true;
+
+
+    public boolean logIn(String name, String password)  {
+        Element     user = null;
+        boolean loggedIn = false;
+        try {
+            user = getUser(name);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        return false;
+
+        if (user != null) {
+            try {
+                loggedIn = checkPassword(name, password);
+                if (loggedIn) {userDB.setUserLoggedIn(user.getAttribute("id"));}
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return loggedIn;
     }
 
     public void addActionListeners() {
@@ -41,7 +55,8 @@ public class SignInController extends AuthenticationController {
                     }
                     else {
                         try {
-                            if (logIn(view.getEmail(), view.getPassword())) {
+                            String email = view.getEmail(), password = view.getPassword();
+                            if (logIn(email, password)) {
                                 JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else {
@@ -50,6 +65,7 @@ public class SignInController extends AuthenticationController {
                         }
                         catch (Exception ex) {
                             JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+                            System.out.println(ex.getMessage());
                         }
                     }
 

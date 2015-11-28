@@ -13,7 +13,7 @@ public class MusicianDB extends Database {
     public static MusicianDB getMusicianDB() {return database;}
 
     public NodeList getMusicians() throws Exception {
-        return getItems("musician");
+        return getItems();
     }
 
     public Element getMusician(String musicianID) throws Exception {

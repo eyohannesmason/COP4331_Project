@@ -2,6 +2,7 @@ package database;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -43,17 +44,13 @@ public class Database {
         transformer.transform(source, result);
     }
 
-    protected NodeList getItems(String tagName) throws Exception {
+    protected NodeList getItems() throws Exception {
         Document document = getDocument(XML_PATH);
-        NodeList result = document.getElementsByTagName(tagName);
-        return result;
+        Node root = document.getElementsByTagName("*").item(0);
+        return ((Element) root).getElementsByTagName("*");
     }
 
     protected String generateNewID() {
-        /*I figure we could make DB items share IDs,
-          e.g. the Profile with ID=123 corresponds to
-          the user with ID=123.
-          */
         return UUID.randomUUID().toString().substring(0, 8);
     }
 

@@ -16,10 +16,10 @@ public class RegistrationController extends AuthenticationController {
 
     public static RegistrationController getInstance() { return instance; }
 
-    public void addUser(String name, String password, String type) throws Exception {
+    public void addUser(String email, String password, String type) throws Exception {
         // todo throw exception if user already exists
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        Element newUser = userDB.addUser(name, hashedPassword, type);
+        Element newUser = userDB.addUser(email, hashedPassword, type);
         if (type.equals("musician")) {
             musicianDB.addMusician(newUser);
         } else if (type.equals("band")) {

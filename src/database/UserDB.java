@@ -18,9 +18,9 @@ public class UserDB extends Database {
         return getItems();
     }
 
-    public Element addUser(String name, String password, String type) throws Exception {
+    public Element addUser(String email, String password, String type) throws Exception {
         LinkedHashMap<String, String> children = new LinkedHashMap<String, String>();
-        children.put("name", name);
+        children.put("email", email);
         children.put("password", password);
         children.put("type", type);
         return addElementToRoot("user", children);

@@ -23,18 +23,18 @@ public class SignInController extends AuthenticationController {
 
 
 
-    public boolean logIn(String name, String password)  {
+    public boolean logIn(String email, String password)  {
         Element     user = null;
         boolean loggedIn = false;
         try {
-            user = getUser(name);
+            user = getUser(email);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         if (user != null) {
             try {
-                loggedIn = checkPassword(name, password);
+                loggedIn = checkPassword(email, password);
                 if (loggedIn) {userDB.setUserLoggedIn(user.getAttribute("id"));}
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -81,8 +81,8 @@ public class SignInController extends AuthenticationController {
         });
     }
 
-    public boolean checkPassword(String name, String passAttempt) throws Exception {
-        Element user = getUser(name);
+    public boolean checkPassword(String email, String passAttempt) throws Exception {
+        Element user = getUser(email);
         if (user != null) {
             String hash = user.getElementsByTagName("password").item(0).getTextContent();
             return BCrypt.checkpw(passAttempt, hash);

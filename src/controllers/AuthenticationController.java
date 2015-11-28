@@ -14,19 +14,19 @@ public abstract class AuthenticationController implements IController {
          bandDB = BandDB.getBandDB();
      }
 
-    protected Element getUser(String name) throws Exception {
+    protected Element getUser(String email) throws Exception {
         NodeList users = userDB.getUsers();
         Element user;
-        String currentName;
+        String currentEmail;
         for (int i=0; i<users.getLength(); i++) {
             if (users.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 try {
                     user = (Element) users.item(i);
-                    NodeList nameList = user.getElementsByTagName("name");
-                    Node currentNode = nameList.item(0);
+                    NodeList emailList = user.getElementsByTagName("email");
+                    Node currentNode = emailList.item(0);
                     if (currentNode != null) {
-                        currentName = currentNode.getTextContent();
-                        if (currentName.equals(name)) {
+                        currentEmail = currentNode.getTextContent();
+                        if (currentEmail.equals(email)) {
                             return user;
                         }
                     }

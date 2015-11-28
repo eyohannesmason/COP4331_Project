@@ -13,11 +13,13 @@ public class BandDB extends Database {
     }
 
     public void addBand(Element userElement) throws Exception {
-        String name = userElement.getElementsByTagName("name").item(0).getTextContent(),
+        String email = userElement.getElementsByTagName("email").item(0).getTextContent(),
                 id = userElement.getAttribute("id");
         LinkedHashMap<String, String> children = new LinkedHashMap<String, String>();
-        children.put("name", name);
+        children.put("email", email);
+        children.put("profileImage", "src/images/defaultUserImg.png");
         children.put("members", "");
+        children.put("need", "");
         addElementToRoot("band", id, children);
     }
 

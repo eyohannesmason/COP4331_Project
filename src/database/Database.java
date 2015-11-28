@@ -12,6 +12,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
@@ -26,6 +29,38 @@ public class Database {
 
     public Database(String xmlPath) {
         XML_PATH = xmlPath;
+    }
+
+    protected Element getElementById(String id) throws Exception {
+        Document document = getDocument(XML_PATH);
+        XPath xpath =  XPathFactory.newInstance().newXPath();
+        String queryString = "//*[@id='"+id+"']";
+        Node node = (Node) xpath.evaluate(queryString, document, XPathConstants.NODE);
+        return (Element) node;
+    }
+
+    protected Element getElementByEmail(String email) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Node root = document.getElementsByTagName("*").item(0);
+        NodeList nodes = ((Element)root).getElementsByTagName("*");
+
+        Node      currentNode = null,
+             currentEmailNode = null;
+
+        String  currentEmail = null;
+        Element element = null;
+        for(int i=0; i<nodes.getLength(); i++) {
+            currentNode = nodes.item(i);
+            currentEmailNode = ((Element)currentNode).getElementsByTagName("email").item(0);
+            if (currentEmailNode != null) {
+                currentEmail = currentEmailNode.getTextContent();
+                if (currentEmail.equals(email)) {
+                    element = (Element) currentNode;
+                    break;
+                }
+            }
+        }
+        return element;
     }
 
     protected Document getDocument(String filePath) throws Exception {

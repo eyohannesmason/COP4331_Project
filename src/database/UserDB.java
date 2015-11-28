@@ -26,6 +26,12 @@ public class UserDB extends Database {
         return addElementToRoot("user", children);
     }
 
+    public String getUserType(String userID) throws Exception {
+        Element user = getElementById(userID);
+        Element type = (Element) user.getElementsByTagName("type").item(0);
+        return type.getTextContent();
+    }
+
     public void setUserLoggedIn(String id) throws Exception {
         changeAttribute(id, "logged-in", "true");
     }

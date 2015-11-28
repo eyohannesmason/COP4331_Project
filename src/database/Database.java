@@ -39,6 +39,30 @@ public class Database {
         return (Element) node;
     }
 
+    protected Element getElementByEmail(String email) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Node root = document.getElementsByTagName("*").item(0);
+        NodeList nodes = ((Element)root).getElementsByTagName("*");
+
+        Node      currentNode = null,
+             currentEmailNode = null;
+
+        String  currentEmail = null;
+        Element element = null;
+        for(int i=0; i<nodes.getLength(); i++) {
+            currentNode = nodes.item(i);
+            currentEmailNode = ((Element)currentNode).getElementsByTagName("email").item(0);
+            if (currentEmailNode != null) {
+                currentEmail = currentEmailNode.getTextContent();
+                if (currentEmail.equals(email)) {
+                    element = (Element) currentNode;
+                    break;
+                }
+            }
+        }
+        return element;
+    }
+
     protected Document getDocument(String filePath) throws Exception {
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File(filePath));

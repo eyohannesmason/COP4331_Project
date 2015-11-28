@@ -36,5 +36,14 @@ public class DatabaseTest extends TestCase {
         assertEquals("John Smith", name);
     }
 
+    public void testGetElementByEmail() throws Exception {
+        String exampleEmail = "josh@josh.com";
+        Element josh = db.getElementByEmail(exampleEmail);
+        String email = "";
+        if (josh != null) {
+            email = josh.getElementsByTagName("email").item(0).getTextContent();
+        }
+        assertEquals(exampleEmail, email);
+    }
 
 }

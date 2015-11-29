@@ -69,13 +69,18 @@ public class MusicianDB extends Database {
         saveDocument(document);
     }
 
-    public void removeInstrument(String id, String instrument) throws Exception {
-        String[] instruments = {instrument};
-        removeAnyInstruments(id, "instruments", instruments);
+    public void removeInstrument(String id, String primaryInstrument) throws Exception {
+        String[] instruments = {primaryInstrument};
+        removeAnyInstruments(id, "instruments", "primary", instruments);
     }
 
-    public void removeInstruments(String id, String[] instruments) throws Exception {
-        removeAnyInstruments(id, "instruments", instruments);
+    public void removeInstruments(String id, String[] secondaryInstruments) throws Exception {
+        removeAnyInstruments(id, "instruments", "secondary", secondaryInstruments);
+    }
+
+    public void removeInstruments(String id, String primaryInstrument, String[] secondaryInstruments) throws Exception {
+        removeInstrument(id, primaryInstrument);
+        removeInstruments(id, secondaryInstruments);
     }
 
     public void addGivenInstrument(String id, String instrument) throws Exception {
@@ -97,11 +102,11 @@ public class MusicianDB extends Database {
     }
 
     public void removeNeededInstruments(String id, String[] instruments) throws Exception {
-        removeAnyInstruments(id, "need", instruments);
+        removeAnyInstruments(id, "need", "instrument", instruments);
     }
 
     public void removeGivenInstruments(String id, String[] instruments) throws Exception {
-        removeAnyInstruments(id, "give", instruments);
+        removeAnyInstruments(id, "give", "instrument", instruments);
     }
 
     private void addNeededOrGiven(String id, String needOrGive, String[] instruments) throws Exception {
@@ -117,11 +122,11 @@ public class MusicianDB extends Database {
         saveDocument(document);
     }
 
-    private void removeAnyInstruments(String id, String parentName, final String[] instruments) throws Exception {
+    private void removeAnyInstruments(String id, String parentName, String childName, final String[] instruments) throws Exception {
         Document document = getDocument(XML_PATH);
         Element musician = getElementById(document, id);
         Element neededOrGiven = (Element) musician.getElementsByTagName(parentName).item(0);
-        NodeList instrumentElements = neededOrGiven.getElementsByTagName("instrument");
+        NodeList instrumentElements = neededOrGiven.getElementsByTagName(childName);
         LinkedList<Element> toRemove = new LinkedList<Element>();
         Node currentInstrument;
         String currentTextContent;

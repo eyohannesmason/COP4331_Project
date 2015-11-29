@@ -42,7 +42,12 @@ public class MusicianDB extends Database {
         Element primary;
         if (instruments.hasChildNodes()) {
             primary = (Element) instruments.getElementsByTagName("primary").item(0);
+            if (primary==null) {
+                primary = document.createElement("primary");
+                instruments.appendChild(primary);
+            }
             primary.setTextContent(primaryInstrument);
+
         } else {
             primary = document.createElement("primary");
             primary.setTextContent(primaryInstrument);

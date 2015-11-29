@@ -39,6 +39,13 @@ public class Database {
         return (Element) node;
     }
 
+    protected Element getElementById(Document document, String id) throws Exception {
+        XPath xpath =  XPathFactory.newInstance().newXPath();
+        String queryString = "//*[@id='"+id+"']";
+        Node node = (Node) xpath.evaluate(queryString, document, XPathConstants.NODE);
+        return (Element) node;
+    }
+
     protected Element getElementByEmail(String email) throws Exception {
         Document document = getDocument(XML_PATH);
         Node root = document.getElementsByTagName("*").item(0);

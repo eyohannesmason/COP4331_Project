@@ -1,5 +1,6 @@
 package database;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -33,11 +34,36 @@ public class MusicianDB extends Database {
     }
 
     public void addInstruments(String id, String primaryInstrument) throws Exception {
-
+        Document document = getDocument(XML_PATH);
+        Element element = getElementById(document, id);
+        Element instruments = (Element) element.getElementsByTagName("instruments").item(0);
+        Element primary;
+        if (instruments.hasChildNodes()) {
+            primary = (Element) instruments.getElementsByTagName("primary").item(0);
+            primary.setTextContent(primaryInstrument);
+        } else {
+            primary = document.createElement("primary");
+            primary.setTextContent(primaryInstrument);
+            instruments.appendChild(primary);
+        }
+        saveDocument(document);
     }
 
-    public void addInstruments(String id, String primaryInstrument, String[] secondaryInstruments) {
-
+    public void addInstruments(String id, String primaryInstrument, String[] secondaryInstruments) throws Exception {
+        addInstruments(id, primaryInstrument);
+        addInstruments(id, secondaryInstruments);
     }
 
+    public void addInstruments(String id, String[] secondaryInstruments) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element element = getElementById(document, id);
+        Element instruments = (Element) element.getElementsByTagName("instruments").item(0);
+        Element secondary;
+        for(String instrument: secondaryInstruments) {
+            secondary = document.createElement("secondary");
+            secondary.setTextContent(instrument);
+            instruments.appendChild(secondary);
+        }
+        saveDocument(document);
+    }
 }

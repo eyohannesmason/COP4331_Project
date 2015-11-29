@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 public class MusicianDB extends Database {
     private MusicianDB() {
@@ -66,7 +67,28 @@ public class MusicianDB extends Database {
         }
         saveDocument(document);
     }
-    
+
+    public void removeInstrument(String id, String instrument) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element musician = getElementById(document, id);
+        Element instruments = (Element) musician.getElementsByTagName("instruments").item(0);
+        NodeList allInstruments = instruments.getElementsByTagName("*");
+
+        LinkedList<Element> toRemove = new LinkedList<Element>();
+
+        Element currentInstrument;
+        for(int i=0; i<allInstruments.getLength(); i++) {
+            currentInstrument = (Element) allInstruments.item(i);
+            if(currentInstrument.getTextContent().equals(instrument)) {
+                toRemove.add(currentInstrument);
+            }
+        }
+        for(Element element: toRemove) {
+            instruments.removeChild(element);
+        }
+        saveDocument(document);
+    }
+
     public void addGivenInstrument(String id, String instrument) throws Exception {
         String[] instruments = {instrument};
         addGivenInstruments(id, instruments);
@@ -88,12 +110,12 @@ public class MusicianDB extends Database {
     private void addNeededOrGiven(String id, String needOrGive, String[] instruments) throws Exception {
         Document document = getDocument(XML_PATH);
         Element element = getElementById(document, id);
-        Element needed = (Element) element.getElementsByTagName(needOrGive).item(0);
-        Element newNeededInstrument;
+        Element neededOrGiven = (Element) element.getElementsByTagName(needOrGive).item(0);
+        Element newInstrument;
         for(String instrument: instruments) {
-            newNeededInstrument = document.createElement("instrument");
-            newNeededInstrument.setTextContent(instrument);
-            needed.appendChild(newNeededInstrument);
+            newInstrument = document.createElement("instrument");
+            newInstrument.setTextContent(instrument);
+            neededOrGiven.appendChild(newInstrument);
         }
         saveDocument(document);
     }

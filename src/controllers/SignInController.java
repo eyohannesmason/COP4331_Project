@@ -21,8 +21,6 @@ public class SignInController extends AuthenticationController {
 
     public static SignInController getInstance() { return instance; }
 
-
-
     public boolean logIn(String email, String password)  {
         Element     user = null;
         boolean loggedIn = false;
@@ -31,6 +29,7 @@ public class SignInController extends AuthenticationController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
 
         if (user != null) {
             try {

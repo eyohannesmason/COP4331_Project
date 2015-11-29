@@ -2,9 +2,11 @@ package database;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 public class MusicianDB extends Database {
     private MusicianDB() {
@@ -66,6 +68,15 @@ public class MusicianDB extends Database {
         }
         saveDocument(document);
     }
+
+    public void removeInstrument(String id, String instrument) throws Exception {
+        String[] instruments = {instrument};
+        removeAnyInstruments(id, "instruments", instruments);
+    }
+
+    public void removeInstruments(String id, String[] instruments) throws Exception {
+        removeAnyInstruments(id, "instruments", instruments);
+    }
     
     public void addGivenInstrument(String id, String instrument) throws Exception {
         String[] instruments = {instrument};
@@ -85,6 +96,14 @@ public class MusicianDB extends Database {
         addNeededOrGiven(id, "give", instruments);
     }
 
+    public void removeNeededInstruments(String id, String[] instruments) throws Exception {
+        removeAnyInstruments(id, "need", instruments);
+    }
+
+    public void removeGivenInstruments(String id, String[] instruments) throws Exception {
+        removeAnyInstruments(id, "give", instruments);
+    }
+
     private void addNeededOrGiven(String id, String needOrGive, String[] instruments) throws Exception {
         Document document = getDocument(XML_PATH);
         Element element = getElementById(document, id);
@@ -94,6 +113,29 @@ public class MusicianDB extends Database {
             newNeededInstrument = document.createElement("instrument");
             newNeededInstrument.setTextContent(instrument);
             needed.appendChild(newNeededInstrument);
+        }
+        saveDocument(document);
+    }
+
+    private void removeAnyInstruments(String id, String parentName, final String[] instruments) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element musician = getElementById(document, id);
+        Element neededOrGiven = (Element) musician.getElementsByTagName(parentName).item(0);
+        NodeList instrumentElements = neededOrGiven.getElementsByTagName("instrument");
+        LinkedList<Element> toRemove = new LinkedList<Element>();
+        Node currentInstrument;
+        String currentTextContent;
+        for(int i=0; i<instrumentElements.getLength(); i++) {
+            currentInstrument = instrumentElements.item(i);
+            currentTextContent = currentInstrument.getTextContent();
+            for(String instrument: instruments) {
+                if (currentTextContent.equals(instrument)) {
+                    toRemove.add((Element) currentInstrument);
+                }
+            }
+        }
+        for(Element instrument: toRemove) {
+            neededOrGiven.removeChild(instrument);
         }
         saveDocument(document);
     }

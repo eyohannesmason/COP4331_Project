@@ -95,6 +95,7 @@ public class Database {
         Document document = getDocument(XML_PATH);
         Node root = document.getElementsByTagName("*").item(0);
         return ((Element) root).getElementsByTagName("*");
+
     }
 
     protected String generateNewID() {

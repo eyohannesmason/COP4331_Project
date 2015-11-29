@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-/**
- * Created by costin on 11/19/2015.
- */
 public class SignInView extends BaseView {
 
     public SignInView() {

@@ -69,18 +69,13 @@ public class MusicianDB extends Database {
         saveDocument(document);
     }
 
-    public void removeInstrument(String id, String primaryInstrument) throws Exception {
+    public void removeInstruments(String id, String primaryInstrument) throws Exception {
         String[] instruments = {primaryInstrument};
-        removeAnyInstruments(id, "instruments", "primary", instruments);
+        removeAnyInstruments(id, "instruments", instruments);
     }
 
     public void removeInstruments(String id, String[] secondaryInstruments) throws Exception {
-        removeAnyInstruments(id, "instruments", "secondary", secondaryInstruments);
-    }
-
-    public void removeInstruments(String id, String primaryInstrument, String[] secondaryInstruments) throws Exception {
-        removeInstrument(id, primaryInstrument);
-        removeInstruments(id, secondaryInstruments);
+        removeAnyInstruments(id, "instruments", secondaryInstruments);
     }
 
     public void addGivenInstrument(String id, String instrument) throws Exception {
@@ -102,11 +97,11 @@ public class MusicianDB extends Database {
     }
 
     public void removeNeededInstruments(String id, String[] instruments) throws Exception {
-        removeAnyInstruments(id, "need", "instrument", instruments);
+        removeAnyInstruments(id, "need", instruments);
     }
 
     public void removeGivenInstruments(String id, String[] instruments) throws Exception {
-        removeAnyInstruments(id, "give", "instrument", instruments);
+        removeAnyInstruments(id, "give", instruments);
     }
 
     private void addNeededOrGiven(String id, String needOrGive, String[] instruments) throws Exception {
@@ -122,11 +117,11 @@ public class MusicianDB extends Database {
         saveDocument(document);
     }
 
-    private void removeAnyInstruments(String id, String parentName, String childName, final String[] instruments) throws Exception {
+    private void removeAnyInstruments(String id, String parentName, final String[] instruments) throws Exception {
         Document document = getDocument(XML_PATH);
         Element musician = getElementById(document, id);
         Element neededOrGiven = (Element) musician.getElementsByTagName(parentName).item(0);
-        NodeList instrumentElements = neededOrGiven.getElementsByTagName(childName);
+        NodeList instrumentElements = neededOrGiven.getElementsByTagName("*");
         LinkedList<Element> toRemove = new LinkedList<Element>();
         Node currentInstrument;
         String currentTextContent;

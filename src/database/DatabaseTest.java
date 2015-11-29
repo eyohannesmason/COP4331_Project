@@ -46,4 +46,10 @@ public class DatabaseTest extends TestCase {
         assertEquals(exampleEmail, email);
     }
 
+    public void testGetIdByEmail() throws Exception {
+        String exampleEmail = "josh@josh.com";
+        String exampleId = "8a9b1712";
+        String id = db.getIdByEmail(exampleEmail);
+        assertEquals(exampleId, id);
+    }
 }

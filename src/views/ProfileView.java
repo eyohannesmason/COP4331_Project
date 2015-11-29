@@ -14,6 +14,7 @@ public class ProfileView extends BaseView {
     public ProfileView() {
         super(new BorderLayout());
         createComponents();
+        this.setPreferredSize(getPreferredSize());
     }
 
     public void createComponents() {
@@ -26,14 +27,17 @@ public class ProfileView extends BaseView {
         //Set Margins
         this.setBorder(new EmptyBorder(10,10,10,10));
 
+        //Create Sidebar Container
+        sideBarContainer = new JPanel(new BorderLayout());
+        //sideBarContainer.setLayout(new BoxLayout(sideBarContainer, BoxLayout.Y_AXIS));
+        sideBarContainer.setBorder(new LineBorder(Color.blue));
+
         //Add User Image
-        controller.getUser().getProfileImage().getImage();
-        userImage = new JLabel(new ImageIcon(resizeProfileImage(controller.getUser().getProfileImage(), profileImgWidth, profileImgHeight)));
+        userImage = new JLabel(new ImageIcon(resizeProfileImage(controller.getUser().getProfileImage(), profileImgWidth - 10, profileImgHeight - 10)));
         userImage.setPreferredSize(new Dimension(profileImgWidth, profileImgHeight));
-        userImage.setVerticalAlignment(SwingConstants.TOP);
 
         //Add Nav Menu
-        // TODO create nav menus for Musician / Band and add it under the user image
+        JPanel navMenu = new NavMenu();
 
         //Add search bar
         // TODO create search bar component and add it to the top of the BorderLayout CENTER
@@ -42,8 +46,10 @@ public class ProfileView extends BaseView {
         // TODO create "News Feed" component and add it under search bar.
 
         //Add Components to Container
-        this.add(userImage, BorderLayout.LINE_START);
+        sideBarContainer.add(userImage, BorderLayout.PAGE_START);
+        sideBarContainer.add(navMenu, BorderLayout.CENTER);
 
+        this.add(sideBarContainer, BorderLayout.LINE_START);
     }
 
     private Image resizeProfileImage(ImageIcon imgIcon, int w, int h) {
@@ -58,6 +64,7 @@ public class ProfileView extends BaseView {
         return resizedImg;
     }
 
+    JPanel sideBarContainer;
     JLabel userImage;
     private int profileImgWidth, profileImgHeight;
 }

@@ -66,11 +66,4 @@ public class MusicianDB extends Database {
         }
         saveDocument(document);
     }
-
-    public static void main(String[] args) throws Exception {
-        MusicianDB db = MusicianDB.getMusicianDB();
-        String[] secondary = {"drums", "xylophone"};
-        db.addInstruments("1", "banjo", secondary);
-    }
-
 }

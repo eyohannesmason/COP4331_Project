@@ -52,4 +52,5 @@ public class DatabaseTest extends TestCase {
         String id = db.getIdByEmail(exampleEmail);
         assertEquals(exampleId, id);
     }
+
 }

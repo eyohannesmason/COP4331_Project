@@ -66,4 +66,35 @@ public class MusicianDB extends Database {
         }
         saveDocument(document);
     }
+    
+    public void addGivenInstrument(String id, String instrument) throws Exception {
+        String[] instruments = {instrument};
+        addGivenInstruments(id, instruments);
+    }
+
+    public void addNeededInstrument(String id, String instrument) throws Exception {
+        String[] instruments = {instrument};
+        addNeededInstruments(id, instruments);
+    }
+
+    public void addNeededInstruments(String id, String[] instruments) throws Exception {
+        addNeededOrGiven(id, "need", instruments);
+    }
+
+    public void addGivenInstruments(String id, String[] instruments) throws Exception {
+        addNeededOrGiven(id, "give", instruments);
+    }
+
+    private void addNeededOrGiven(String id, String needOrGive, String[] instruments) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element element = getElementById(document, id);
+        Element needed = (Element) element.getElementsByTagName(needOrGive).item(0);
+        Element newNeededInstrument;
+        for(String instrument: instruments) {
+            newNeededInstrument = document.createElement("instrument");
+            newNeededInstrument.setTextContent(instrument);
+            needed.appendChild(newNeededInstrument);
+        }
+        saveDocument(document);
+    }
 }

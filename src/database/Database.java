@@ -70,6 +70,11 @@ public class Database {
         return element;
     }
 
+    protected String getIdByEmail(String email) throws Exception {
+        Element element = getElementByEmail(email);
+        return element.getAttribute("id");
+    }
+
     protected Document getDocument(String filePath) throws Exception {
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File(filePath));

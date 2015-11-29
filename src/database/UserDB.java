@@ -1,5 +1,6 @@
 package database;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -28,7 +29,8 @@ public class UserDB extends Database {
     }
 
     public String getUserType(String userID) throws Exception {
-        Element user = getElementById(userID);
+        Document document = getDocument(XML_PATH);
+        Element user = getElementById(document, userID);
         Element type = (Element) user.getElementsByTagName("type").item(0);
         return type.getTextContent();
     }

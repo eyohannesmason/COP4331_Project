@@ -6,7 +6,6 @@ import controllers.ProfileController;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -20,7 +19,7 @@ public class ProfileView extends BaseView {
 
     public void createComponents() {
         //Set profile image width and height
-        profileImgHeight = profileImgWidth = 100;
+        profileImgHeight = profileImgWidth = 120;
 
         //Get Controller Reference
         ProfileController controller = (ProfileController) BandHeroApp.getInstance().getController();
@@ -37,7 +36,7 @@ public class ProfileView extends BaseView {
         //Add User Image
         userImage = new JLabel(new ImageIcon(resizeProfileImage(controller.getUser().getProfileImage(), profileImgWidth - 10, profileImgHeight - 10)));
         userImage.setPreferredSize(new Dimension(profileImgWidth, profileImgHeight));
-        userImage.setBorder(new BevelBorder(BevelBorder.RAISED, Color.black, Color.gray));
+        userImage.setBorder(new BevelBorder(BevelBorder.RAISED, Color.gray, Color.black));
 
         //Add Nav Menu
         JPanel navMenu = new NavMenu();
@@ -47,6 +46,7 @@ public class ProfileView extends BaseView {
 
         //Add "News Feed"
         // TODO create "News Feed" component and add it under search bar.
+        JPanel dynamicContentPanel = new DynamicContentPanel();
 
         //Add Components to Sidebar Container
         sideBarContainer.add(userImage, BorderLayout.PAGE_START);
@@ -54,6 +54,7 @@ public class ProfileView extends BaseView {
 
         //Add Components to Center Container
         centerContainer.add(searchBar, BorderLayout.PAGE_START);
+        centerContainer.add(dynamicContentPanel, BorderLayout.CENTER);
 
         this.add(sideBarContainer, BorderLayout.LINE_START);
         this.add(centerContainer, BorderLayout.CENTER);

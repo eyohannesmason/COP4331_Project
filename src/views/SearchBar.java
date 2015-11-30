@@ -49,6 +49,7 @@ public class SearchBar extends BaseView {
 
         //Initialize Search Button
         searchButton = new JButton("Search");
+        searchButton.setIcon(new ImageIcon("src/images/searchIcon.png"));
         c.insets = new Insets(0, 0, 0, 0);
         c.weightx = 0;
         c.gridx = 2;

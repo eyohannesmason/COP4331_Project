@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class RegistrationView extends BaseView {
     public RegistrationView() {
-       super(new FlowLayout());
+       super(new GridBagLayout());
         createComponents();
     }
 
@@ -38,6 +38,10 @@ public class RegistrationView extends BaseView {
     }
 
     protected void createComponents() {
+        //Create Constraints
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+
         //Create Sign In panel
         registerPanel = new JPanel();
         BoxLayout boxLayout = new BoxLayout(registerPanel, BoxLayout.PAGE_AXIS);
@@ -89,6 +93,9 @@ public class RegistrationView extends BaseView {
         buttons.add(registerButton);
         container.add(buttons, BorderLayout.PAGE_END);
         container.setMinimumSize(container.getPreferredSize());
+
+        c.gridx = 0;
+        c.gridy = 0;
         this.add(container);
     }
 

@@ -1,56 +1,79 @@
 package views;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 public class SignInView extends BaseView {
 
     public SignInView() {
-        super(new FlowLayout());
+        super(new GridBagLayout());
         createComponents();
     }
 
-
+    /**
+     * Add an ActionListener to the SignIn Button.
+     * @param l The ActionListener to add.
+     */
     public void addSignInActionListener(ActionListener l) {
         signInButton.addActionListener(l);
     }
 
+    /**
+     * Add an ActionListener to the Register Button.
+     * @param l The ActionListener to add.
+     */
     public void addRegisterActionListener(ActionListener l) {
         registerButton.addActionListener(l);
     }
 
+    /**
+     * Add a KeyListener to the Password Field.
+     * @param l The KeyListener to add.
+     */
+    public void addPasswordFieldKeyListener(KeyListener l) {
+        passwordTextField.addKeyListener(l);
+    }
+
+    /**
+     * Get the user entered Email.
+     * @return Email entered by user.
+     */
     public String getEmail() {
         return emailTextField.getText().trim();
     }
 
+    /**
+     * Get the user entered Password.
+     * @return Password entered by user.
+     */
     public String getPassword() {
         return passwordTextField.getText().trim();
     }
 
     protected void createComponents() {
+        //Create Constraints
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+
         //Create Sign In panel
         signInPanel = new JPanel();
         BoxLayout boxLayout = new BoxLayout(signInPanel, BoxLayout.PAGE_AXIS);
         signInPanel.setLayout(boxLayout);
         //Create Container
-        container = new JPanel(new BorderLayout(0, 10));
-        //container.setMaximumSize(new Dimension(300, 400));
+        container = new JPanel(new BorderLayout());
         //Create Buttons Container
         buttons = new JPanel(new FlowLayout());
 
         //Create Form Components
         signInLabel = new JLabel("Sign In");
-        signInLabel.setMaximumSize(new Dimension(300, 50));
         signInLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 35));
         emailLabel = new JLabel("Email Address");
-        emailLabel.setMaximumSize(new Dimension(300, 25));
         emailTextField = new JTextField();
-        emailTextField.setMaximumSize(new Dimension(300, 25));
         passwordLabel = new JLabel("Password");
-        passwordLabel.setMaximumSize(new Dimension(300, 25));
         passwordTextField = new JPasswordField();
-        passwordTextField.setMaximumSize(new Dimension(300, 25));
         signInButton = new JButton("Sign In");
         registerButton = new JButton("Register");
 
@@ -64,9 +87,10 @@ public class SignInView extends BaseView {
         buttons.add(signInButton);
         buttons.add(registerButton);
         container.add(buttons, BorderLayout.PAGE_END);
-        //container.setPreferredSize(new Dimension(200, (int) container.getPreferredSize().getHeight()));
-        container.setMinimumSize(container.getPreferredSize());
-        this.add(container);
+
+        c.gridx = 0;
+        c.gridy = 0;
+        this.add(container, c);
     }
     private JPanel buttons;
     private JPanel container;

@@ -9,6 +9,8 @@ import views.SignInView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class SignInController extends AuthenticationController {
 
@@ -47,36 +49,31 @@ public class SignInController extends AuthenticationController {
         getView().addSignInActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(view.getEmail().isEmpty()) {
-                        JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Email field can't be empty!");
-                    }
-                    else if(view.getPassword().isEmpty()) {
-                        JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Password field can't be empty!");
-                    }
-                    else {
-                        try {
-                            String email = view.getEmail(), password = view.getPassword();
-                            if (logIn(email, password)) {
-                                BandHeroApp.getInstance().loadProfileView(new User(getUser(view.getEmail())));
-                                //JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
-                            }
-                            else {
-                                JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Failed! Try again, or click Register to create a new account.", "Sign In Error", JOptionPane.WARNING_MESSAGE);
-                            }
-                        }
-                        catch (Exception ex) {
-                            JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
-                            System.out.println(ex.getMessage());
-                        }
-                    }
-
+                    signIn(view);
                 }
             });
+        //Add ActionListener to the Register Button
         getView().addRegisterActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 BandHeroApp.getInstance().loadRegistrationView();
             }
+        });
+
+        //Add ActionListener to the Password Field.
+        getView().addPasswordFieldKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) { return; }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    signIn(view);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) { return; }
         });
     }
 
@@ -91,6 +88,31 @@ public class SignInController extends AuthenticationController {
 
     public void setView(SignInView view) {
         this.view = view;
+    }
+
+    private void signIn(SignInView view) {
+        if(view.getEmail().isEmpty()) {
+            JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Email field can't be empty!");
+        }
+        else if(view.getPassword().isEmpty()) {
+            JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Password field can't be empty!");
+        }
+        else {
+            try {
+                String email = view.getEmail(), password = view.getPassword();
+                if (logIn(email, password)) {
+                    BandHeroApp.getInstance().loadProfileView(new User(getUser(view.getEmail())));
+                    //JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Failed! Try again, or click Register to create a new account.", "Sign In Error", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            catch (Exception ex) {
+                JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
     }
 
     public SignInView getView() {

@@ -3,6 +3,7 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 public class SignInView extends BaseView {
 
@@ -11,19 +12,42 @@ public class SignInView extends BaseView {
         createComponents();
     }
 
-
+    /**
+     * Add an ActionListener to the SignIn Button.
+     * @param l The ActionListener to add.
+     */
     public void addSignInActionListener(ActionListener l) {
         signInButton.addActionListener(l);
     }
 
+    /**
+     * Add an ActionListener to the Register Button.
+     * @param l The ActionListener to add.
+     */
     public void addRegisterActionListener(ActionListener l) {
         registerButton.addActionListener(l);
     }
 
+    /**
+     * Add a KeyListener to the Password Field.
+     * @param l The KeyListener to add.
+     */
+    public void addPasswordFieldKeyListener(KeyListener l) {
+        passwordTextField.addKeyListener(l);
+    }
+
+    /**
+     * Get the user entered Email.
+     * @return Email entered by user.
+     */
     public String getEmail() {
         return emailTextField.getText().trim();
     }
 
+    /**
+     * Get the user entered Password.
+     * @return Password entered by user.
+     */
     public String getPassword() {
         return passwordTextField.getText().trim();
     }

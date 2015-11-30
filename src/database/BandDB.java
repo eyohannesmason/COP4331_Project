@@ -9,6 +9,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 public class BandDB extends Database {
 
@@ -90,9 +91,50 @@ public class BandDB extends Database {
         return (Element) node;
     }
 
-    public static void main(String[] args) throws Exception {
-        BandDB db = BandDB.getBandDB();
-        db.addBandMember("2", "1", "guitar");
+    public void addNeededInstrument(String bandID, String instrument) throws Exception {
+        String[] instruments = {instrument};
+        addNeededInstruments(bandID, instruments);
+    }
+
+    public void addNeededInstruments(String bandID, String[] instruments) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element element = getElementById(document, bandID);
+        Element neededOrGiven = (Element) element.getElementsByTagName("need").item(0);
+        Element newInstrument;
+        for(String instrument: instruments) {
+            newInstrument = document.createElement("instrument");
+            newInstrument.setTextContent(instrument);
+            neededOrGiven.appendChild(newInstrument);
+        }
+        saveDocument(document);
+    }
+
+    public void removeNeedeInstrument(String bandID, String instrument) throws Exception {
+        String[] instruments = {instrument};
+        removeNeededInstruments(bandID, instruments);
+    }
+
+    public void removeNeededInstruments(String bandID, String[] instruments) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element band = getElementById(document, bandID);
+        Element needed = (Element) band.getElementsByTagName("need").item(0);
+        NodeList instrumentElements = needed.getElementsByTagName("*");
+        LinkedList<Element> toRemove = new LinkedList<Element>();
+        Node currentInstrument;
+        String currentTextContent;
+        for(int i=0; i<instrumentElements.getLength(); i++) {
+            currentInstrument = instrumentElements.item(i);
+            currentTextContent = currentInstrument.getTextContent();
+            for(String instrument: instruments) {
+                if (currentTextContent.equals(instrument)) {
+                    toRemove.add((Element) currentInstrument);
+                }
+            }
+        }
+        for(Element instrument: toRemove) {
+            needed.removeChild(instrument);
+        }
+        saveDocument(document);
     }
 
     private static BandDB database = new BandDB();

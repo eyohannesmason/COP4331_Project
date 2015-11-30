@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.util.HashMap;
@@ -144,5 +145,27 @@ public class Database {
         document.getDocumentElement().appendChild(newElm);
         saveDocument(document);
         return newElm;
+    }
+
+    protected NodeList getNodeListByXPath(String xpathString) throws Exception {
+        Document document = getDocument(XML_PATH);
+        XPath xpath =  XPathFactory.newInstance().newXPath();
+        try {
+            return (NodeList) xpath.evaluate(xpathString, document, XPathConstants.NODESET);
+        } catch (XPathExpressionException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    protected Node getNodeByXPath(String xpathString) throws Exception {
+        Document document = getDocument(XML_PATH);
+        XPath xpath =  XPathFactory.newInstance().newXPath();
+        try {
+            return (Node) xpath.evaluate(xpathString, document, XPathConstants.NODE);
+        } catch (XPathExpressionException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

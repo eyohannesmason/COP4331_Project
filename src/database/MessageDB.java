@@ -4,11 +4,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 public class MessageDB extends Database {
 
     public static void main(String[] args) throws Exception{
@@ -41,34 +36,23 @@ public class MessageDB extends Database {
 
     public NodeList getThreadsByRecipient(String recipientID) throws Exception {
         String queryString = "//thread[@to='"+recipientID+"']";
-        return getThreadsByXPath(queryString);
+        return getNodeListByXPath(queryString);
     }
 
     public NodeList getThreadsBySender(String senderID) throws Exception {
         String queryString = "//thread[@from='"+senderID+"']";
-        return getThreadsByXPath(queryString);
+        return getNodeListByXPath(queryString);
     }
 
     public NodeList getThreadsById(String threadID) throws Exception {
         String queryString = "//thread[@id='"+threadID+"']";
-        return getThreadsByXPath(queryString);
+        return getNodeListByXPath(queryString);
     }
 
     public NodeList getThreadsByPair(String userA, String userB, boolean getUnion) throws Exception {
         String queryString = "//thread[@to='"+userA+"' and @from='"+userB+"'";
         queryString += (getUnion) ? " or @to='"+userB+"' and @from='"+userA+"']" : "]";
-        return getThreadsByXPath(queryString);
-    }
-
-    private NodeList getThreadsByXPath(String xpathString) throws Exception {
-        Document document = getDocument(XML_PATH);
-        XPath xpath =  XPathFactory.newInstance().newXPath();
-        try {
-            return (NodeList) xpath.evaluate(xpathString, document, XPathConstants.NODESET);
-        } catch (XPathExpressionException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return getNodeListByXPath(queryString);
     }
 
     private Element createThread(Document document, String to, String from) {

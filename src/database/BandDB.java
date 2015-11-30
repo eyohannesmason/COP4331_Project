@@ -84,12 +84,7 @@ public class BandDB extends Database {
         saveDocument(document);
     }
 
-    private Element getBandMemberById(Document document, String bandID, String memberID) throws Exception {
-        XPath xpath =  XPathFactory.newInstance().newXPath();
-        String queryString = "//*[@id='"+bandID+"']/members/member[@id='"+memberID+"']";
-        Node node = (Node) xpath.evaluate(queryString, document, XPathConstants.NODE);
-        return (Element) node;
-    }
+
 
     public void addNeededInstrument(String bandID, String instrument) throws Exception {
         String[] instruments = {instrument};
@@ -135,6 +130,57 @@ public class BandDB extends Database {
             needed.removeChild(instrument);
         }
         saveDocument(document);
+    }
+
+    public void addMemberInstrument(String bandID, String memberID, String instrument) throws Exception {
+        String[] instruments = {instrument};
+        addMemberInstruments(bandID, memberID, instruments);
+    }
+
+    public void addMemberInstruments(String bandID, String memberID, String[] instruments) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element member = getBandMemberById(document, bandID, memberID);
+        Element newInstrument;
+        for(String instrument: instruments) {
+            newInstrument = document.createElement("instrument");
+            newInstrument.setTextContent(instrument);
+            member.appendChild(newInstrument);
+        }
+        saveDocument(document);
+    }
+
+    public void removeMemberInstrument(String bandID, String memberID, String instrument) throws Exception {
+        String[] instruments = {instrument};
+        removeMemberInstruments(bandID, memberID, instruments);
+    }
+
+    public void removeMemberInstruments(String bandID, String memberID, String[] instruments) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element member = getBandMemberById(document, bandID, memberID);
+        NodeList instrumentElements = member.getElementsByTagName("instrument");
+        LinkedList<Element> toRemove = new LinkedList<Element>();
+        Node currentInstrument;
+        String currentTextContent;
+        for(int i=0; i<instrumentElements.getLength(); i++) {
+            currentInstrument = instrumentElements.item(i);
+            currentTextContent = currentInstrument.getTextContent();
+            for(String instrument: instruments) {
+                if (currentTextContent.equals(instrument)) {
+                    toRemove.add((Element) currentInstrument);
+                }
+            }
+        }
+        for(Element instrument: toRemove) {
+            member.removeChild(instrument);
+        }
+        saveDocument(document);
+    }
+
+    private Element getBandMemberById(Document document, String bandID, String memberID) throws Exception {
+        XPath xpath =  XPathFactory.newInstance().newXPath();
+        String queryString = "//*[@id='"+bandID+"']/members/member[@id='"+memberID+"']";
+        Node node = (Node) xpath.evaluate(queryString, document, XPathConstants.NODE);
+        return (Element) node;
     }
 
     private static BandDB database = new BandDB();

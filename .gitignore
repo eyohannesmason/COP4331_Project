@@ -8,6 +8,7 @@ out
 src/database/users.xml
 src/database/bands.xml
 src/database/musicians.xml
+src/database/messages.xml
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

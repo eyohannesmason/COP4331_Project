@@ -10,11 +10,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ProfileView extends BaseView {
-
     public ProfileView() {
         super(new BorderLayout());
         createComponents();
         this.setPreferredSize(getPreferredSize());
+        isLoaded = true;
     }
 
     public void createComponents() {
@@ -33,23 +33,32 @@ public class ProfileView extends BaseView {
         //Create Center Container
         centerContainer = new JPanel(new BorderLayout());
 
+        //Add User Email
+        userEmail = new JLabel(BandHeroApp.getInstance().getCurrentUser().getEmail());
+        userEmail.setFont(new Font(getFont().getName(), getFont().getStyle(), 20));
+
         //Add User Image
         userImage = new JLabel(new ImageIcon(resizeProfileImage(controller.getUser().getProfileImage(), profileImgWidth - 10, profileImgHeight - 10)));
         userImage.setPreferredSize(new Dimension(profileImgWidth, profileImgHeight));
         userImage.setBorder(new BevelBorder(BevelBorder.RAISED, Color.gray, Color.black));
 
+        //Image + Email container
+        JPanel imageContainer = new JPanel(new BorderLayout());
+        imageContainer.add(userEmail, BorderLayout.PAGE_START);
+        imageContainer.add(userImage, BorderLayout.CENTER);
+
         //Add Nav Menu
-        JPanel navMenu = new NavMenu();
+        navMenu = new NavMenu();
 
         //Add search bar
-        JPanel searchBar = new SearchBar();
+        searchBar = new SearchBar();
 
         //Add "News Feed"
         // TODO create "News Feed" component and add it under search bar.
-        JPanel dynamicContentPanel = new DynamicContentPanel();
+        dynamicContentPanel = new DynamicContentPanel();
 
         //Add Components to Sidebar Container
-        sideBarContainer.add(userImage, BorderLayout.PAGE_START);
+        sideBarContainer.add(imageContainer, BorderLayout.PAGE_START);
         sideBarContainer.add(navMenu, BorderLayout.CENTER);
 
         //Add Components to Center Container
@@ -72,8 +81,25 @@ public class ProfileView extends BaseView {
         return resizedImg;
     }
 
+    public NavMenu getNavMenu() {
+        return (NavMenu) navMenu;
+    }
+
+    public SearchBar getSearchBar() {
+        return (SearchBar) searchBar;
+    }
+
+    public DynamicContentPanel getDynamicContentPanel() {
+        return (DynamicContentPanel) dynamicContentPanel;
+    }
+
+    JLabel userEmail;
     JPanel centerContainer;
     JPanel sideBarContainer;
     JLabel userImage;
+    JPanel navMenu;
+    JPanel searchBar;
+    JPanel dynamicContentPanel;
     private int profileImgWidth, profileImgHeight;
+    private boolean isLoaded = false;
 }

@@ -2,14 +2,18 @@ package models;
 
 import app.BandHeroApp;
 import database.Database;
+import database.MusicianDB;
 import database.UserDB;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
 
@@ -23,6 +27,23 @@ public class User {
         email = userElement.getElementsByTagName("email").item(0).getTextContent();
         userType = userElement.getElementsByTagName("type").item(0).getTextContent();
         id = userElement.getAttribute("id");
+        secondaryInstruments = new ArrayList<>();
+        try {
+            Node instr = MusicianDB.getMusicianDB().getMusician(id).getElementsByTagName("instruments").item(0);
+            for (int i = 0; i < instr.getChildNodes().getLength(); i++) {
+                if(!instr.getChildNodes().item(i).getTextContent().isEmpty()) {
+                    if(instr.getChildNodes().item(i).getNodeName().trim().equals("primary")) {
+                        primaryInstrument = instr.getChildNodes().item(i).getTextContent().trim();
+                    }
+                    else {
+                        secondaryInstruments.add(instr.getChildNodes().item(i).getTextContent().trim());
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -55,7 +76,15 @@ public class User {
     public String getId() {
         return id;
     }
+    public ArrayList<String> getSecondaryInstruments() {
+        return secondaryInstruments;
+    }
+    public String getPrimaryInstrument() {
+        return primaryInstrument;
+    }
 
+    private String primaryInstrument;
+    private ArrayList<String> secondaryInstruments;
     private String id;
     private String userType;
     private String email;

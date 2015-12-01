@@ -31,7 +31,6 @@ public class InstrumentsView extends BaseView{
         User user = BandHeroApp.getInstance().getCurrentUser();
         if(user.getUserType().equals("musician")) {
             try {
-                Node instruments = MusicianDB.getMusicianDB().getMusician(user.getId()).getElementsByTagName("instruments").item(0);
                 JLabel primary = new JLabel("Primary Instrument: ");
                 Font subtitle = new Font(getFont().getName(), getFont().getStyle(), 20);
                 primary.setFont(subtitle);
@@ -39,23 +38,15 @@ public class InstrumentsView extends BaseView{
                 this.add(primary, c);
 
                 c.gridy++;
-                int start = 0;
-                for(int i = 0; i < instruments.getChildNodes().getLength(); i++) {
-                    start++;
-                    if(!instruments.getChildNodes().item(i).getTextContent().isEmpty()) {
-                        this.add(new JLabel(instruments.getChildNodes().item(1).getTextContent().trim()), c);
-                        break;
-                    }
-                }
+                this.add(new JLabel(user.getPrimaryInstrument()), c);
+
                 c.gridy++;
                 JLabel secondary = new JLabel("Secondary Instruments: ");
                 secondary.setFont(subtitle);
                 this.add(secondary, c);
-                for(int i = start; i < instruments.getChildNodes().getLength(); i++) {
+                for(int i = 0; i < user.getSecondaryInstruments().size(); i++) {
                     c.gridy ++;
-                    if(!instruments.getChildNodes().item(i).getTextContent().isEmpty()) {
-                        this.add(new JLabel(instruments.getChildNodes().item(i).getTextContent().trim()), c);
-                    }
+                    this.add(new JLabel(user.getSecondaryInstruments().get(i)), c);
                 }
             }
             catch (Exception e){

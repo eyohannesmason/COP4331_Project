@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-public class MusicianDB extends Database {
+public class MusicianDB extends Database { // TODO getMusiciansByNeed/Give
     private MusicianDB() {
         XML_PATH = "src/database/musicians.xml";
     }
@@ -108,6 +108,21 @@ public class MusicianDB extends Database {
 
     public void removeGivenInstruments(String id, String[] instruments) throws Exception {
         removeAnyInstruments(id, "give", instruments);
+    }
+
+    public NodeList getMusiciansByInstrument(String instrument) throws Exception {
+        String xpathString = "//instruments/*[contains(.,'"+instrument+"')]/../..";
+        return getNodeListByXPath(xpathString);
+    }
+
+    public NodeList getMusiciansByGiven(String givenInstrument) throws Exception {
+        String xpathString = "//give/instrument[contains(.,'"+givenInstrument+"')]/../..";
+        return getNodeListByXPath(xpathString);
+    }
+
+    public NodeList getMusiciansByNeeded(String neededInstrument) throws Exception {
+        String xpathString = "//need/instrument[contains(.,'"+neededInstrument+"')]/../..";
+        return getNodeListByXPath(xpathString);
     }
 
     private void addNeededOrGiven(String id, String needOrGive, String[] instruments) throws Exception {

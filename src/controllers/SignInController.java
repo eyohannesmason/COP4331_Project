@@ -101,7 +101,9 @@ public class SignInController extends AuthenticationController {
             try {
                 String email = view.getEmail(), password = view.getPassword();
                 if (logIn(email, password)) {
-                    BandHeroApp.getInstance().loadProfileView(new User(getUser(view.getEmail())));
+                    User user = new User(getUser(view.getEmail()));
+                    BandHeroApp.getInstance().setUser(user);
+                    BandHeroApp.getInstance().loadProfileView(user);
                     //JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {

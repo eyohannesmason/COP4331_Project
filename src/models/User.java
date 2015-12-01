@@ -1,12 +1,15 @@
 package models;
 
 import app.BandHeroApp;
+import database.Database;
+import database.UserDB;
 import org.w3c.dom.Element;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.StringReader;
 
 public class User {
 
@@ -17,6 +20,9 @@ public class User {
     public User(Element userElement) {
         //Load user image
         loadImage(userElement.getElementsByTagName("profileImage").item(0).getTextContent());
+        email = userElement.getElementsByTagName("email").item(0).getTextContent();
+        userType = userElement.getElementsByTagName("type").item(0).getTextContent();
+        id = userElement.getAttribute("id");
     }
 
     /**
@@ -40,5 +46,18 @@ public class User {
         }
     }
 
+    public String getEmail() {
+        return email;
+    }
+    public String getUserType() {
+        return userType;
+    }
+    public String getId() {
+        return id;
+    }
+
+    private String id;
+    private String userType;
+    private String email;
     private BufferedImage userProfileImage;
 }

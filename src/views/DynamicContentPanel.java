@@ -16,8 +16,20 @@ public class DynamicContentPanel extends BaseView {
     @Override
     public void createComponents() {
         //Create Grid Bag Constraints
-        GridBagConstraints c = new GridBagConstraints();
+        c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
+        setContent(new InstrumentsView());
     }
+
+    public void setContent(JPanel content) {
+        this.remove(content);
+        this.content = content;
+        this.add(content, c);
+        this.revalidate();
+        this.repaint();
+    }
+
+    private JPanel content;
+    GridBagConstraints c;
 }

@@ -37,6 +37,7 @@ public class BandHeroApp {
     public void loadProfileView(User user) {
         controller = new ProfileController(user);
         ((ProfileController) controller).setView(new ProfileView());
+        ((ProfileController) controller).getNavMenuController().setView(((ProfileController) controller).getView().getNavMenu());
         mainFrame.setContentPane(((ProfileController) controller).getView());
         mainFrame.revalidate();
     }
@@ -58,6 +59,14 @@ public class BandHeroApp {
         mainFrame.revalidate();
     }
 
+    public void setUser(User user) {
+        currentUser = user;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
     public IController getController() { return controller; }
 
     public JFrame getMainFrame() {
@@ -68,6 +77,7 @@ public class BandHeroApp {
         return instance;
     }
 
+    private User currentUser;
     private IController controller;
     private JFrame mainFrame;
     private static BandHeroApp instance = new BandHeroApp();

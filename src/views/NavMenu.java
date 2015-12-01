@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.plaf.metal.MetalBorders;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
 public class NavMenu extends BaseView {
 

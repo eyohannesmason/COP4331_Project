@@ -33,7 +33,19 @@ public class ProfileController implements IController{
         return view;
     }
 
+    /**
+     * Get the NavigationMenuController of the Profile.
+     * @return NavMenuController of the Profile.
+     */
+    public NavMenuController getNavMenuController() {
+        if(navMenuController == null) {
+            navMenuController = new NavMenuController();
+        }
+
+        return navMenuController;
+    }
 
     private User user;
     private ProfileView view;
+    private NavMenuController navMenuController;
 }

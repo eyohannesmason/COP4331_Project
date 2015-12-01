@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-public class MusicianDB extends Database { // TODO getMusiciansByNeed/Give
+public class MusicianDB extends Database {
     private MusicianDB() {
         XML_PATH = "src/database/musicians.xml";
     }

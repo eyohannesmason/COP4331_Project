@@ -18,6 +18,14 @@ public class BandDB extends Database {
         return getItems();
     }
 
+
+    public static void main(String[] args) throws Exception {
+        BandDB db = BandDB.getBandDB();
+        db.addBandMember("73f89842", "7df9e0ac");
+        String[] needed = {"guitar", "triangle", "bass"};
+        db.addNeededInstruments("73f89842", needed);
+    }
+
     public void addBand(Element userElement) throws Exception {
         String email = userElement.getElementsByTagName("email").item(0).getTextContent(),
                 id = userElement.getAttribute("id");
@@ -35,13 +43,12 @@ public class BandDB extends Database {
         newMember.setAttribute("id", memberID);
 
         Element musician = MusicianDB.getMusicianDB().getMusician(memberID);
-        Element newMemberEmailElement = (Element) musician.getElementsByTagName("email").item(0);
-        newMember.appendChild(newMemberEmailElement);
+        Element emailElement = document.createElement("email");
+        emailElement.setTextContent(musician.getElementsByTagName("email").item(0).getTextContent());
+        newMember.appendChild(emailElement);
 
-        Element band = getElementById(document, bandID);
-        Element membersElement = (Element) band.getElementsByTagName("members").item(0);
-        membersElement.appendChild(newMember);
-
+        Element members = (Element) getElementById(document, bandID).getElementsByTagName("members").item(0);
+        members.appendChild(newMember);
         saveDocument(document);
     }
 
@@ -104,7 +111,7 @@ public class BandDB extends Database {
         saveDocument(document);
     }
 
-    public void removeNeedeInstrument(String bandID, String instrument) throws Exception {
+    public void removeNeededInstrument(String bandID, String instrument) throws Exception {
         String[] instruments = {instrument};
         removeNeededInstruments(bandID, instruments);
     }

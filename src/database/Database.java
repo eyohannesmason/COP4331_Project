@@ -32,6 +32,10 @@ public class Database {
         XML_PATH = xmlPath;
     }
 
+    public Element getBlankElement(String tagName) throws Exception {
+        return getDocument(XML_PATH).createElement(tagName);
+    }
+
     protected Element getElementById(String id) throws Exception {
         Document document = getDocument(XML_PATH);
         XPath xpath =  XPathFactory.newInstance().newXPath();

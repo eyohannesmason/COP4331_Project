@@ -87,7 +87,7 @@ public class MessageDB extends Database {
     }
 
     /**
-     * Get all threads where user A is the recipient while user B is the sender, or vice versa.
+     * Get all threads between two users, regardless of sender/recipient.
      * @param userA userID of one of the users in the message thread
      * @param userB userID of the other user in the message thread
      * @return NodeList containing threads

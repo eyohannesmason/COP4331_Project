@@ -70,6 +70,12 @@ public class Database {
         return (Element) node;
     }
 
+    /**
+     * Retrieves an element with a particular email address.
+     * @param email email address to search for
+     * @return an Element whose email address matches the search parameter
+     * @throws Exception
+     */
     protected Element getElementByEmail(String email) throws Exception {
         Document document = getDocument(XML_PATH);
         Node root = document.getElementsByTagName("*").item(0);
@@ -94,11 +100,23 @@ public class Database {
         return element;
     }
 
+    /**
+     * Given a user's email, get their user ID
+     * @param email the user's email address
+     * @return the user's ID
+     * @throws Exception
+     */
     protected String getIdByEmail(String email) throws Exception {
         Element element = getElementByEmail(email);
         return element.getAttribute("id");
     }
 
+    /**
+     * Creates an instance of the XML document
+     * @param filePath the location of the XML document
+     * @return a Document object representing an XML document
+     * @throws Exception
+     */
     protected Document getDocument(String filePath) throws Exception {
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File(filePath));
@@ -106,6 +124,11 @@ public class Database {
         return document;
     }
 
+    /**
+     * Saves changes to an XML document
+     * @param document the document to save
+     * @throws Exception
+     */
     protected void saveDocument(Document document) throws Exception {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -115,6 +138,11 @@ public class Database {
         transformer.transform(source, result);
     }
 
+    /**
+     * Gets all children of the root node
+     * @return NodeList containing all items in an XML document
+     * @throws Exception
+     */
     protected NodeList getItems() throws Exception {
         Document document = getDocument(XML_PATH);
         Node root = document.getElementsByTagName("*").item(0);
@@ -122,16 +150,34 @@ public class Database {
 
     }
 
+    /**
+     * Creates a new unique ID
+     * @return String of 8 random letters and numbers
+     */
     protected String generateNewID() {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
+    /**
+     * Change the value of an attribute of an XML element
+     * @param elmID ID of the element
+     * @param attributeName name of the attribute
+     * @param newValue new value of the attribute
+     * @throws Exception
+     */
     protected void changeAttribute(String elmID, String attributeName, String newValue) throws Exception {
         Document document = getDocument(XML_PATH);
         document.getElementById(elmID).setAttribute(attributeName, newValue);
         saveDocument(document);
     }
 
+    /**
+     * Adds a new XML element to the root element
+     * @param tagName name of the new XML element
+     * @param childContents tag names and text contents of the new XML elements child elements
+     * @return the new XML element
+     * @throws Exception
+     */
     protected Element addElementToRoot(String tagName, HashMap<String, String> childContents) throws Exception {
         Document document = getDocument(XML_PATH);
         Element newElm = document.createElement(tagName);
@@ -147,6 +193,14 @@ public class Database {
         return newElm;
     }
 
+    /**
+     * Same as the other version, but gives the new XML element a specific ID instead of generating a new one
+     * @param tagName name of the new XML element
+     * @param id ID of the new XML element
+     * @param childContents tag names and text contents of the new XML element's child elements
+     * @return the new XML element
+     * @throws Exception
+     */
     protected Element addElementToRoot(String tagName, String id, HashMap<String, String> childContents) throws Exception {
         Document document = getDocument(XML_PATH);
         Element newElm = document.createElement(tagName);
@@ -161,6 +215,13 @@ public class Database {
         return newElm;
     }
 
+    /**
+     * Adds a new empty element to the root element
+     * @param tagName name of the new XML element
+     * @param id ID of the new XML element
+     * @return the new XML element
+     * @throws Exception
+     */
     protected Element addElementToRoot(String tagName, String id) throws Exception {
         Document document = getDocument(XML_PATH);
         Element newElm = document.createElement(tagName);
@@ -170,6 +231,12 @@ public class Database {
         return newElm;
     }
 
+    /**
+     * Performs an XPath search on the document
+     * @param xpathString XPath pattern used for the search
+     * @return NodeList where each Node matches the pattern
+     * @throws Exception
+     */
     protected NodeList getNodeListByXPath(String xpathString) throws Exception {
         Document document = getDocument(XML_PATH);
         XPath xpath =  XPathFactory.newInstance().newXPath();
@@ -181,6 +248,12 @@ public class Database {
         }
     }
 
+    /**
+     * Returns an XML element that matches an XPath pattern
+     * @param xpathString XPath pattern used for the search
+     * @return the matching XML element
+     * @throws Exception
+     */
     protected Node getNodeByXPath(String xpathString) throws Exception {
         Document document = getDocument(XML_PATH);
         XPath xpath =  XPathFactory.newInstance().newXPath();

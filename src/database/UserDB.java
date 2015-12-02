@@ -16,10 +16,21 @@ public class UserDB extends Database {
     private static UserDB database = new UserDB();
     public static UserDB getUserDB() {return database;}
 
+    /**
+     * Gets all users of the application
+     * @return NodeList where each Node is a user
+     * @throws Exception
+     */
     public NodeList getUsers() throws Exception {
         return getItems();
     }
 
+    /**
+     * Gets a user with a specific email address
+     * @param email the user's email address
+     * @return an Element representing a user
+     * @throws Exception
+     */
     public Element getUser(String email) throws Exception {
         NodeList users = getUsers();
         Element user;
@@ -45,6 +56,14 @@ public class UserDB extends Database {
         return null;
     }
 
+    /**
+     * Adds a new user to the database
+     * @param email the user's email address
+     * @param password the user's hashed password
+     * @param type the type of user (musician or band)
+     * @return the newly added user
+     * @throws Exception
+     */
     public Element addUser(String email, String password, String type) throws Exception {
         LinkedHashMap<String, String> children = new LinkedHashMap<String, String>();
         children.put("email", email);
@@ -54,6 +73,12 @@ public class UserDB extends Database {
         return addElementToRoot("user", children);
     }
 
+    /**
+     * Checks the type of a specific user
+     * @param userID the userID of the user
+     * @return the user's type (musician or band)
+     * @throws Exception
+     */
     public String getUserType(String userID) throws Exception {
         Document document = getDocument(XML_PATH);
         Element user = getElementById(document, userID);
@@ -61,10 +86,20 @@ public class UserDB extends Database {
         return type.getTextContent();
     }
 
+    /**
+     * Marks a user as logged in in the database
+     * @param id userID of the logged-in user
+     * @throws Exception
+     */
     public void setUserLoggedIn(String id) throws Exception {
         changeAttribute(id, "logged-in", "true");
     }
 
+    /**
+     * Marks a user as logged out in the database
+     * @param id userID of the logged-out user
+     * @throws Exception
+     */
     public void setUserLoggedOut(String id) throws Exception {
         changeAttribute(id, "logged-in", "false");
     }

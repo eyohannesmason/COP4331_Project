@@ -36,6 +36,14 @@ public class Database {
         return getDocument(XML_PATH).createElement(tagName);
     }
 
+    public HashMap<Element, Document> getBlankElementAndDocument(String tagName) throws Exception {
+        Document document = getDocument(XML_PATH);
+        Element element = document.createElement(tagName);
+        HashMap<Element, Document> result = new HashMap<>();
+        result.put(element, document);
+        return result;
+    }
+
     protected Element getElementById(String id) throws Exception {
         Document document = getDocument(XML_PATH);
         XPath xpath =  XPathFactory.newInstance().newXPath();

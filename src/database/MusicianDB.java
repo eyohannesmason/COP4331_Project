@@ -23,6 +23,10 @@ public class MusicianDB extends Database {
         return getElementById(musicianID);
     }
 
+    public Element getMusicianByEmail(String email) throws Exception {
+        return getElementByEmail(email);
+    }
+
     public void addMusician(Element userElement) throws Exception {
         String email = userElement.getElementsByTagName("email").item(0).getTextContent(),
                  id = userElement.getAttribute("id");

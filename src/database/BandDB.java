@@ -30,6 +30,10 @@ public class BandDB extends Database {
         return getElementById(bandID);
     }
 
+    public Element getBandByEmail(String email) throws Exception {
+        return getElementByEmail(email);
+    }
+
     public NodeList getBandsByNeeded(String instrument) throws Exception {
         String xpathString = "//need/instrument[contains(.,'"+instrument+"')]/../..";
         return getNodeListByXPath(xpathString);

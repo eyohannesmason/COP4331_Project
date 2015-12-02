@@ -32,10 +32,22 @@ public class Database {
         XML_PATH = xmlPath;
     }
 
+    /**
+     * Helper function to return an empty XML element
+     * @param tagName name of the desired element (can be anything)
+     * @return an empty Element
+     * @throws Exception on XML IO errors
+     */
     public Element getBlankElement(String tagName) throws Exception {
         return getDocument(XML_PATH).createElement(tagName);
     }
 
+    /**
+     * Retrieves an element with a certain ID attribute.
+     * @param id ID of the desired Element
+     * @return the desired Element
+     * @throws Exception on XML IO errors
+     */
     protected Element getElementById(String id) throws Exception {
         Document document = getDocument(XML_PATH);
         XPath xpath =  XPathFactory.newInstance().newXPath();
@@ -44,6 +56,13 @@ public class Database {
         return (Element) node;
     }
 
+    /**
+     * Retrieves an element with a certain ID attribute from a particular XML document.
+     * @param document The XML document to be parsed
+     * @param id ID of the desired Element
+     * @return the desired Element
+     * @throws Exception on XML IO errors
+     */
     protected Element getElementById(Document document, String id) throws Exception {
         XPath xpath =  XPathFactory.newInstance().newXPath();
         String queryString = "//*[@id='"+id+"']";

@@ -28,21 +28,19 @@ public class BandDB extends Database {
         return getItems();
     }
 
-    public static void main(String[] args) throws Exception {
-        BandDB db = BandDB.getBandDB();
-        db.addBandMember("73f89842", "7df9e0ac");
-        String[] needed = {"guitar", "triangle", "bass"};
-        db.addNeededInstruments("73f89842", needed);
-    }
-
     /**
      * Retrieves a specific band.
      * @param bandID userID of the desired band.
      * @return an Element object representing a band.
      * @throws Exception on XML IO errors
      */
+
     public Element getBand(String bandID) throws Exception {
         return getElementById(bandID);
+    }
+    
+    public Element getBandByEmail(String email) throws Exception {
+        return getElementByEmail(email);
     }
 
     /**

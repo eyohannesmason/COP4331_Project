@@ -26,6 +26,10 @@ public class BandDB extends Database {
         db.addNeededInstruments("73f89842", needed);
     }
 
+    public Element getBand(String bandID) throws Exception {
+        return getElementById(bandID);
+    }
+
     public NodeList getBandsByNeeded(String instrument) throws Exception {
         String xpathString = "//need/instrument[contains(.,'"+instrument+"')]/../..";
         return getNodeListByXPath(xpathString);

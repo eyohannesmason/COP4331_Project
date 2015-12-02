@@ -20,8 +20,7 @@ public class MusicianDB extends Database {
     }
 
     public Element getMusician(String musicianID) throws Exception {
-        Document document = getDocument(XML_PATH);
-        return getElementById(document, musicianID);
+        return getElementById(musicianID);
     }
 
     public void addMusician(Element userElement) throws Exception {

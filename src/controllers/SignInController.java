@@ -1,6 +1,8 @@
 package controllers;
 
 import app.BandHeroApp;
+import models.Band;
+import models.Musician;
 import models.User;
 import org.w3c.dom.Element;
 import utils.BCrypt;
@@ -102,6 +104,11 @@ public class SignInController extends AuthenticationController {
                 String email = view.getEmail(), password = view.getPassword();
                 if (logIn(email, password)) {
                     User user = new User(getUser(view.getEmail()));
+                    if(user.getUserType().equals("musician")) {
+                        user = new Musician(getUser(view.getEmail()));
+                    } else {
+                        user = new Band(getUser(view.getEmail()));
+                    }
                     BandHeroApp.getInstance().setUser(user);
                     BandHeroApp.getInstance().loadProfileView(user);
                     //JOptionPane.showMessageDialog(BandHeroApp.getInstance().getMainFrame(), "Login Successful!", "Message", JOptionPane.INFORMATION_MESSAGE);

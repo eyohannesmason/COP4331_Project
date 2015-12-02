@@ -38,7 +38,13 @@ public class BandDB extends Database {
     public Element getBand(String bandID) throws Exception {
         return getElementById(bandID);
     }
-    
+
+    /**
+     * Retrieves a band using the email tied to the band's account
+     * @param email email address for the band
+     * @return Element representing a band
+     * @throws Exception on XML IO errors
+     */
     public Element getBandByEmail(String email) throws Exception {
         return getElementByEmail(email);
     }

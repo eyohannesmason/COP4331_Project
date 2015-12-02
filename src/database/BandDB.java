@@ -17,15 +17,7 @@ public class BandDB extends Database {
     public NodeList getBands() throws Exception {
         return getItems();
     }
-
-
-    public static void main(String[] args) throws Exception {
-        BandDB db = BandDB.getBandDB();
-        db.addBandMember("73f89842", "7df9e0ac");
-        String[] needed = {"guitar", "triangle", "bass"};
-        db.addNeededInstruments("73f89842", needed);
-    }
-
+    
     public Element getBand(String bandID) throws Exception {
         return getElementById(bandID);
     }

@@ -1,18 +1,26 @@
 package controllers;
 
+import app.BandHeroApp;
+import com.sun.webkit.dom.NodeListImpl;
 import database.BandDB;
 import database.MusicianDB;
 import database.UserDB;
+import models.User;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import views.SearchBar;
+import views.SearchResults;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class SearchController implements IController {
 
-    public NodeList searchPlayers(String instrumentString) throws Exception {
+    public ArrayList<User> searchPlayers(String instrumentString) throws Exception {
         String[] instruments = instrumentString.split(" ");
         Element players = userDB.getBlankElement("players");
         NodeList currentPlayers;
@@ -28,10 +36,18 @@ public class SearchController implements IController {
                 }
             }
         }
+
+        ArrayList<User> users = new ArrayList<>();
         for(Node player: uniquePlayers) {
-            players.appendChild((Element) player);
+            System.out.println(((Element) player).getAttribute("id"));
+            for(int i = 0; i < player.getChildNodes().getLength(); i++) {
+                if(player.getChildNodes().item(i).getNodeName().equals("email")) {
+                    users.add(new User(userDB.getUser(player.getChildNodes().item(i).getTextContent())));
+                    break;
+                }
+            }
         }
-        return players.getChildNodes();
+        return users;
     }
 
 
@@ -41,6 +57,22 @@ public class SearchController implements IController {
         musicianDB = MusicianDB.getMusicianDB();
         bandDB = BandDB.getBandDB();
     }
+
+    public void addActionListeners() {
+        ((ProfileController) BandHeroApp.getInstance().getController()).getView().getSearchBar().addSearchButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ((ProfileController) BandHeroApp.getInstance().getController()).getView().getDynamicContentPanel().setContent(new SearchResults(SearchController.getInstance().searchPlayers(((ProfileController) BandHeroApp.getInstance().getController()).getView().getSearchBar().getSearchText())));
+                }
+                catch (Exception ex) {
+                    System.out.println("Search Exception.");
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
+    }
+
     private static SearchController controller = new SearchController();
     private static UserDB userDB;
     private static MusicianDB musicianDB;

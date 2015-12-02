@@ -14,7 +14,6 @@ public class ProfileView extends BaseView {
         super(new BorderLayout());
         createComponents();
         this.setPreferredSize(getPreferredSize());
-        isLoaded = true;
     }
 
     public void createComponents() {
@@ -101,5 +100,4 @@ public class ProfileView extends BaseView {
     JPanel searchBar;
     JPanel dynamicContentPanel;
     private int profileImgWidth, profileImgHeight;
-    private boolean isLoaded = false;
 }

@@ -77,6 +77,13 @@ public class SearchBar extends BaseView {
         return new Dimension(w, h);
     }
 
+    public String getSearchText() {
+        if(searchTextField != null) {
+            return searchTextField.getText();
+        }
+        return null;
+    }
+
     JTextField searchTextField;
     JButton searchButton;
 }

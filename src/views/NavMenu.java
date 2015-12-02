@@ -98,21 +98,21 @@ public class NavMenu extends BaseView {
         editProfileButton = new JButton("Edit Profile");
         editProfileButton.setIcon(new ImageIcon("src/images/editIcon.png"));
         c.gridx = 0;
-        c.gridy = 1;
-        buttonsContainer.add(editProfileButton, c);
+        //c.gridy++;
+        //buttonsContainer.add(editProfileButton, c);
 
         //Add Messages Button
         messagesButton = new JButton("Messages");
         messagesButton.setIcon(new ImageIcon("src/images/messagesIcon.png"));
         c.gridx = 0;
-        c.gridy = 2;
-        buttonsContainer.add(messagesButton, c);
+        //c.gridy++;
+        //buttonsContainer.add(messagesButton, c);
 
         //Add SignOut Button
         signOutButton = new JButton("Sign Out");
         signOutButton.setIcon(new ImageIcon("src/images/signOffIcon.png"));
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy++;
         buttonsContainer.add(signOutButton, c);
 
         return buttonsContainer;

@@ -18,17 +18,14 @@ public class BandDB extends Database {
         return getItems();
     }
 
-
-    public static void main(String[] args) throws Exception {
-        BandDB db = BandDB.getBandDB();
-        db.addBandMember("73f89842", "7df9e0ac");
-        String[] needed = {"guitar", "triangle", "bass"};
-        db.addNeededInstruments("73f89842", needed);
-    }
-
     public NodeList getBandsByNeeded(String instrument) throws Exception {
         String xpathString = "//need/instrument[contains(.,'"+instrument+"')]/../..";
         return getNodeListByXPath(xpathString);
+    }
+
+    public Element getBand(String bandID) throws Exception {
+        Document document = getDocument(XML_PATH);
+        return getElementById(document, bandID);
     }
 
     public void addBand(Element userElement) throws Exception {

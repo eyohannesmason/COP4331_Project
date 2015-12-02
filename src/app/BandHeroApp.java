@@ -1,9 +1,6 @@
 package app;
 
-import controllers.IController;
-import controllers.ProfileController;
-import controllers.RegistrationController;
-import controllers.SignInController;
+import controllers.*;
 import models.User;
 import sun.java2d.cmm.Profile;
 import views.ProfileView;
@@ -36,8 +33,9 @@ public class BandHeroApp {
 
     public void loadProfileView(User user) {
         controller = new ProfileController(user);
-        ((ProfileController) controller).setView(new ProfileView());
-        ((ProfileController) controller).getNavMenuController().setView(((ProfileController) controller).getView().getNavMenu());
+        ((ProfileController) getController()).setView(new ProfileView());
+        ((ProfileController) getController()).getNavMenuController().setView(((ProfileController) controller).getView().getNavMenu());
+        SearchController.getInstance().addActionListeners();
         mainFrame.setContentPane(((ProfileController) controller).getView());
         mainFrame.revalidate();
     }

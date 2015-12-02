@@ -1,35 +1,28 @@
 package controllers;
 
+import app.BandHeroApp;
 import database.BandDB;
 import database.MusicianDB;
 import database.UserDB;
+import models.User;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import views.SearchResults;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class SearchController implements IController {
 
-    public static void main(String[] args) throws Exception {
-        SearchController sc = SearchController.getInstance();
-        NodeList players = sc.searchPlayers("triangle guitar");
-    }
 
-    public NodeList searchPlayers(String instrumentString) throws Exception {
+    public ArrayList<User> searchPlayers(String instrumentString) throws Exception {
         String[] instruments = instrumentString.split(" ");
-        Element players = null;
-        Document document = null;
-        HashMap<Element, Document> tmp = musicianDB.getBlankElementAndDocument("players");
-
-        for(HashMap.Entry<Element, Document> entry: tmp.entrySet()) {
-            players = entry.getKey();
-            document = entry.getValue();
-        }
-
         NodeList currentPlayers;
         Node currentPlayer;
         
@@ -43,14 +36,18 @@ public class SearchController implements IController {
                 }
             }
         }
-        if (players != null && document != null) {
-            for(Node player: uniquePlayers) {
-                players.appendChild(document.importNode((Element)player, true));
+
+        ArrayList<User> users = new ArrayList<>();
+        for(Node player: uniquePlayers) {
+            System.out.println(((Element) player).getAttribute("id"));
+            for(int i = 0; i < player.getChildNodes().getLength(); i++) {
+                if(player.getChildNodes().item(i).getNodeName().equals("email")) {
+                    users.add(new User(userDB.getUser(player.getChildNodes().item(i).getTextContent())));
+                    break;
+                }
             }
-            NodeList result = players.getElementsByTagName("*");
-            return result;
         }
-        return null;
+        return users;
     }
 
 
@@ -144,6 +141,22 @@ public class SearchController implements IController {
         musicianDB = MusicianDB.getMusicianDB();
         bandDB = BandDB.getBandDB();
     }
+
+    public void addActionListeners() {
+        ((ProfileController) BandHeroApp.getInstance().getController()).getView().getSearchBar().addSearchButtonActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ((ProfileController) BandHeroApp.getInstance().getController()).getView().getDynamicContentPanel().setContent(new SearchResults(SearchController.getInstance().searchPlayers(((ProfileController) BandHeroApp.getInstance().getController()).getView().getSearchBar().getSearchText())));
+                }
+                catch (Exception ex) {
+                    System.out.println("Search Exception.");
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
+    }
+
     private static SearchController controller = new SearchController();
     private static UserDB userDB;
     private static MusicianDB musicianDB;

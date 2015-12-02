@@ -23,7 +23,7 @@ public class DynamicContentPanel extends BaseView {
     }
 
     public void setContent(JPanel content) {
-        this.remove(content);
+        this.removeAll();
         this.content = content;
         this.add(content, c);
         this.revalidate();
